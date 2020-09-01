@@ -249,11 +249,14 @@
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\System_IO_FileWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\System_IO_PathWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\TimeManagerWrap.cs" />
+     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UDPClientWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UIEventListenerWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_AnimationBlendModeWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_AnimationClipWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_AnimationStateWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_AnimationWrap.cs" />
+     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_AnimatorClipInfoWrap.cs" />
+     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_AnimatorStateInfoWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_AnimatorWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_ApplicationWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_AssetBundleWrap.cs" />
@@ -273,6 +276,8 @@
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_ComponentWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_EventSystems_EventTriggerWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_EventSystems_UIBehaviourWrap.cs" />
+     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_Events_UnityEventBaseWrap.cs" />
+     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_Events_UnityEventWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_GameObjectWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_GradientWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_InputWrap.cs" />
@@ -285,7 +290,9 @@
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_MonoBehaviourWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_ParticleSystemWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_PhysicsWrap.cs" />
+     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_PingWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_PlayModeWrap.cs" />
+     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_PlayerPrefsWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_QualitySettingsWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_QueueModeWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_RectTransformWrap.cs" />
@@ -294,6 +301,7 @@
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_RendererWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_ResourcesWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_RigidbodyWrap.cs" />
+     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_RuntimeAnimatorControllerWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_RuntimePlatformWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_ScreenWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_ShaderWrap.cs" />
@@ -310,6 +318,7 @@
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_UI_AspectRatioFitterWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_UI_BaseMeshEffectWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_UI_ButtonWrap.cs" />
+     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_UI_Button_ButtonClickedEventWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_UI_CanvasScalerWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_UI_ContentSizeFitterWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_UI_DropdownWrap.cs" />
@@ -336,6 +345,7 @@
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_WrapModeWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\ViewWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\LuaConst.cs" />
+     <Compile Include="Assets\LuaFramework\UDPClient.cs" />
      <None Include="Assets\link.xml" />
      <None Include="Assets\StreamingAssets\files.txt" />
      <None Include="Assets\LuaFramework\ToLua\Injection\InjectionBridgeEditorInfo.xml" />
@@ -375,6 +385,9 @@
  </Reference>
  <Reference Include="Debugger">
  <HintPath>E:/Zhangxin/new/TestProtobufLua/Assets/Plugins/Debugger.dll</HintPath>
+ </Reference>
+ <Reference Include="LitJson">
+ <HintPath>E:/Zhangxin/new/TestProtobufLua/Assets/Plugins/LitJson.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Program Files/Unity5.6.4p1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

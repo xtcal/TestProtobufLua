@@ -177,6 +177,9 @@
  <Reference Include="Debugger">
  <HintPath>E:/Zhangxin/new/TestProtobufLua/Assets/Plugins/Debugger.dll</HintPath>
  </Reference>
+ <Reference Include="LitJson">
+ <HintPath>E:/Zhangxin/new/TestProtobufLua/Assets/Plugins/LitJson.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Program Files/Unity5.6.4p1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
  </Reference>

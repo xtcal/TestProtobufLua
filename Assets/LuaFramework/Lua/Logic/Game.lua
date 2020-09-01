@@ -31,6 +31,7 @@ function this.OnInitOK()
     log(table_tostring(_mData))
 
 
+    UDPClient.SendMsg(_mData.data)
 
 
 

@@ -159,6 +159,7 @@ public static class CustomSettings {
 		_GT (typeof (PlayerPrefs)),
 		_GT (typeof (LuaProfiler)),
 
+
 		//for LuaFramework
 		_GT (typeof (RectTransform)),
 		_GT (typeof (Text)),
@@ -214,6 +215,7 @@ public static class CustomSettings {
 		_GT (typeof (Convert)),
 		_GT (typeof (RuntimePlatform)),
 
+		_GT (typeof (UDPClient)),
 
 	};
 

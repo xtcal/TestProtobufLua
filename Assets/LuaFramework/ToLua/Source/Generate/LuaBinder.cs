@@ -13,6 +13,7 @@ public static class LuaBinder
 		LuaProfilerWrap.Register(L);
 		UIEventListenerWrap.Register(L);
 		TimeManagerWrap.Register(L);
+		UDPClientWrap.Register(L);
 		ViewWrap.Register(L);
 		BaseWrap.Register(L);
 		ManagerWrap.Register(L);
@@ -106,11 +107,16 @@ public static class LuaBinder
 		UnityEngine_QualitySettingsWrap.Register(L);
 		UnityEngine_RenderSettingsWrap.Register(L);
 		UnityEngine_ResourcesWrap.Register(L);
+		UnityEngine_PlayerPrefsWrap.Register(L);
 		UnityEngine_RectTransformWrap.Register(L);
 		UnityEngine_CanvasWrap.Register(L);
 		UnityEngine_CanvasGroupWrap.Register(L);
 		UnityEngine_SpriteWrap.Register(L);
 		UnityEngine_GradientWrap.Register(L);
+		UnityEngine_PingWrap.Register(L);
+		UnityEngine_AnimatorStateInfoWrap.Register(L);
+		UnityEngine_AnimatorClipInfoWrap.Register(L);
+		UnityEngine_RuntimeAnimatorControllerWrap.Register(L);
 		UnityEngine_RuntimePlatformWrap.Register(L);
 		L.BeginModule("UI");
 		UnityEngine_UI_TextWrap.Register(L);
@@ -138,6 +144,9 @@ public static class LuaBinder
 		UnityEngine_UI_HorizontalOrVerticalLayoutGroupWrap.Register(L);
 		UnityEngine_UI_LayoutGroupWrap.Register(L);
 		UnityEngine_UI_BaseMeshEffectWrap.Register(L);
+		L.BeginModule("Button");
+		UnityEngine_UI_Button_ButtonClickedEventWrap.Register(L);
+		L.EndModule();
 		L.BeginModule("InputField");
 		L.RegFunction("OnValidateInput", UnityEngine_UI_InputField_OnValidateInput);
 		L.EndModule();
@@ -147,6 +156,8 @@ public static class LuaBinder
 		UnityEngine_EventSystems_EventTriggerWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("Events");
+		UnityEngine_Events_UnityEventWrap.Register(L);
+		UnityEngine_Events_UnityEventBaseWrap.Register(L);
 		L.RegFunction("UnityAction", UnityEngine_Events_UnityAction);
 		L.EndModule();
 		L.BeginModule("Camera");
