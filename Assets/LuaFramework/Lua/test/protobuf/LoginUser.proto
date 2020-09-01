@@ -17,4 +17,5 @@ message SC_LoginUser	//用户信息
 	optional string Nick = 3;
 	optional uint32 Uid = 4;
 	optional string Token = 5;
+	optional Base.GVector3 vet = 6;
 }

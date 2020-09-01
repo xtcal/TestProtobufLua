@@ -200,16 +200,24 @@ public class EmmyProtoBufExport {
 		StringBuilder sb = new StringBuilder ();
 		string[] files = Directory.GetFiles (dirUrl, "*.proto");
 		foreach (var path in files) {
+			sb = new StringBuilder ();
+			sb.AppendLine ("local this = {}");
+
 			string proBufStr = File.ReadAllText (path, Encoding.UTF8);
 
-			string packageName = Regex.Match (proBufStr, "package.*").Value.Replace ("package", "");
-			packageName = Regex.Replace (packageName, "//.*", "").Replace (";", "").Trim ();
-			if (packageName == "") {
-				packageName = Path.GetFileNameWithoutExtension ("packageName");
+			string packageName = Path.GetFileNameWithoutExtension (path);
+			strs.Add (packageName);
+
+			// string packageName = Regex.Match (proBufStr, "package.*").Value.Replace ("package", "");
+			// packageName = Regex.Replace (packageName, "//.*", "").Replace (";", "").Trim ();
+			// if (packageName == "") {
+				// packageName = Path.GetFileNameWithoutExtension (path);
+			// }
+
+			var luadirUrl = Path.Combine (dirUrl, packageName);
+			if (!Directory.Exists (luadirUrl)) {
+				Directory.CreateDirectory (luadirUrl);
 			}
-			sb = new StringBuilder ();
-			sb.AppendLine ("MsgData." + packageName + " = {}");
-			sb.AppendLine ("local " + packageName + " = MsgData." + packageName);
 
 			MatchCollection con = Regex.Matches (proBufStr, @"[message|enum].*[\s\S]?.*{.*[\s\S]+?(}+?)");
 			foreach (Match item in con) { //每个 { } 块
@@ -241,7 +249,11 @@ public class EmmyProtoBufExport {
 					if (i == 0) {
 						sb.AppendLine ("---@class " + pname + " " + zhushi);
 						if (isEnum) {
-							sb.AppendLine (pname + " = {}");
+							sb.AppendLine ("this." + cName + " = {");
+						}
+					} else if (i == allLine.Length - 1) {
+						if (isEnum) {
+							sb.AppendLine ("}");
 						}
 					} else {
 						if (temp.IndexOf ("=") != -1) {
@@ -260,7 +272,6 @@ public class EmmyProtoBufExport {
 								} else {
 									sb.Append (packageName + "." + firstType);
 								}
-
 								if (temps[0].Equals ("repeated")) {
 									sb.Append ("[] " + zhushi);
 								} else {
@@ -271,30 +282,29 @@ public class EmmyProtoBufExport {
 								if (zhushi != "") {
 									zhushi = "---" + zhushi;
 								}
-								sb.AppendLine (pname + "." + temps[0] + " = " + Regex.Replace (temps[2], "//.*", "") + zhushi);
+								sb.AppendLine ("\t" + temps[0] + " = " + Regex.Replace (temps[2], "//.*", "") + zhushi + ",");
 							}
 						}
 					}
 				}
-
 				if (isClass) {
-					strs.Add (pname);
+					var str = "this." + cName;
 					sb.AppendLine ("---@return " + pname);
-					sb.AppendLine ("function " + pname + "(code)");
-					sb.AppendLine ("\t---@type " + pname);
-					sb.AppendLine ("\tlocal _new = {}");
-					sb.AppendLine ("\t_new._desc = \"" + pname + "\"");
-					sb.AppendLine ("\tif code then");
-					sb.AppendLine ("\t\t_new = protobuf.decode(\"" + pname + "\", code)");
+					sb.AppendLine ("function " + str + "(_data)");
+					sb.AppendLine ("\tlocal o = {");
+					sb.AppendLine ("\t\t_desc = \"" + pname + "\"");
+					sb.AppendLine ("\t}");
+					sb.AppendLine ("\tif _data then");
+					sb.AppendLine ("\t\to = protobuf.decode(\"" + pname + "\", _data)");
 					sb.AppendLine ("\tend");
 
-					sb.AppendLine ("\tfunction _new.Encode()");
-					sb.AppendLine ("\t\t_new.Encode = nil");
-					sb.AppendLine ("\t\t_new._desc = nil");
-					sb.AppendLine ("\t\treturn protobuf.encode(\"" + pname + "\", _new)");
+					sb.AppendLine ("\tfunction o.Encode()");
+					sb.AppendLine ("\t\to.Encode = nil");
+					sb.AppendLine ("\t\to._desc = nil");
+					sb.AppendLine ("\t\treturn protobuf.encode(\"" + pname + "\", o)");
 					sb.AppendLine ("\tend");
 
-					sb.AppendLine ("\treturn _new");
+					sb.AppendLine ("\treturn o");
 					sb.AppendLine ("end");
 
 					// sb.AppendLine ("function " + pname + "(code)");
@@ -313,14 +323,15 @@ public class EmmyProtoBufExport {
 					sb.AppendLine ("");
 				}
 			}
+			sb.AppendLine ("return this");
 			Debug.Log (sb.ToString ());
 
-			File.WriteAllText (dirUrl + "/" + Path.GetFileNameWithoutExtension (path) + "_pb.lua", sb.ToString ());
+			File.WriteAllText (luadirUrl + "/" + Path.GetFileNameWithoutExtension (path) + ".lua", sb.ToString ());
 		}
 
 		sb = new StringBuilder ();
 		foreach (var item in strs) {
-			sb.AppendLine ("MsgData[\"" + item + "\"] = MsgData." + item);
+			sb.AppendLine ("MsgData." + item + " = require(\"test.protobuf." +item+ "." + item+ "\")");
 		}
 		File.WriteAllText (dirUrl + "/MsgData_tab.lua", sb.ToString ());
 	}

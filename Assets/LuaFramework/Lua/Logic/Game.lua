@@ -20,7 +20,7 @@ end
 
 --初始化完成，发送链接服务器信息--
 function this.OnInitOK()
-    local _mData = MsgData.base.MessageData()
+    local _mData = MsgData.Base.MessageData()
     local _user = MsgData.LoginUser.CS_LoginUser()
     _user.passWord = "1234"
     _user.uid = 12345

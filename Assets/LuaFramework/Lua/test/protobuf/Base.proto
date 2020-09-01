@@ -1,4 +1,4 @@
-package base;//消息结构
+package Base;//消息结构
 
 message GIPEndPoint{
 	optional int32 Ip = 1;//这是ip
@@ -17,4 +17,41 @@ message MessageData{
 	optional int32 com = 3;
 	optional int32 tsak = 4;
 	optional string data = 5;
+}
+
+
+enum Corpus {
+	UNIVERSAL = 0;
+	WEB = 1;
+	IMAGES = 2;
+	LOCAL = 3;
+	NEWS = 4;
+	PRODUCTS = 5;
+	VIDEO = 6;
+}
+
+enum PhoneType {
+	MOBILE = 0;
+	HOME = 1;
+	WORK = 2;
+}
+
+message PhoneNumber {
+	required string number = 1;
+	optional PhoneType type = 2 [default = HOME];
+}
+
+message Person
+{
+	required string name = 1;
+	required int32 id = 2;
+	optional string email = 3;
+
+
+	// a simple comment
+	repeated PhoneNumber phone = 4;
+}
+
+message AddressBook {
+	repeated Person person = 1;	
 }
