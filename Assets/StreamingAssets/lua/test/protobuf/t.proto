@@ -1,0 +1,8 @@
+
+package t;
+
+import "ttt.proto";
+
+message TT{
+	repeated ttt.SC_LoginUser Arr = 1;
+}

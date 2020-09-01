@@ -1,0 +1,20 @@
+package base;//消息结构
+
+message GIPEndPoint{
+	optional int32 Ip = 1;//这是ip
+	optional string Port = 2;
+}
+
+message GVector3{
+	optional int32 X = 1;
+	optional int32 Y = 2;
+	optional int32 Z = 3;
+}
+
+message MessageData{
+	optional int32 ret = 1;
+	optional string desc = 2;
+	optional int32 com = 3;
+	optional int32 tsak = 4;
+	optional string data = 5;
+}
