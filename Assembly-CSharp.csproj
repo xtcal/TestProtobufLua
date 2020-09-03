@@ -375,19 +375,22 @@
  <HintPath>D:/Program Files/Unity5.6.4p1/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="DOTween">
- <HintPath>E:/Zhangxin/new/TestProtobufLua/Assets/DOTween/DOTween.dll</HintPath>
+ <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/DOTween/DOTween.dll</HintPath>
  </Reference>
  <Reference Include="DOTween43">
- <HintPath>E:/Zhangxin/new/TestProtobufLua/Assets/DOTween/DOTween43.dll</HintPath>
+ <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/DOTween/DOTween43.dll</HintPath>
  </Reference>
  <Reference Include="CString">
- <HintPath>E:/Zhangxin/new/TestProtobufLua/Assets/Plugins/CString.dll</HintPath>
+ <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/CString.dll</HintPath>
  </Reference>
  <Reference Include="Debugger">
- <HintPath>E:/Zhangxin/new/TestProtobufLua/Assets/Plugins/Debugger.dll</HintPath>
+ <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/Debugger.dll</HintPath>
  </Reference>
  <Reference Include="LitJson">
- <HintPath>E:/Zhangxin/new/TestProtobufLua/Assets/Plugins/LitJson.dll</HintPath>
+ <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/LitJson.dll</HintPath>
+ </Reference>
+ <Reference Include="protobuf-net">
+ <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/protobuf-net.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Program Files/Unity5.6.4p1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

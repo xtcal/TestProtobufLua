@@ -18,8 +18,14 @@ function this.InitViewPanels()
     end
 end
 
+function this.SendMsg(_data)
+    local name = _data._desc
+    UDPClient.SendMsg(name,_data.Encode())
+end
+
 --初始化完成，发送链接服务器信息--
 function this.OnInitOK()
+
     local _mData = MsgData.Base.MessageData()
     local _user = MsgData.LoginUser.CS_LoginUser()
     _user.passWord = "1234"
@@ -28,10 +34,10 @@ function this.OnInitOK()
     _mData.desc = _user._desc
     _mData.data = _user.Encode()
 
-    log(table_tostring(_mData))
+    --log(table_tostring(_mData))
 
 
-    UDPClient.SendMsg(_mData.data)
+    this.SendMsg(_mData.Encode())
 
 
 
