@@ -7,17 +7,6 @@ require "test/MsgData_pb"
 Game = {}
 local this = Game
 
-local game
-local transform
-local gameObject
-local WWW = UnityEngine.WWW
-
-function this.InitViewPanels()
-    for i = 1, #PanelNames do
-        require("View/" .. tostring(PanelNames[i]))
-    end
-end
-
 function this.SendMsg(_data)
     local name = _data._desc
     UDPClient.SendMsg(name,_data.Encode())
@@ -38,37 +27,6 @@ function this.OnInitOK()
 
 
     this.SendMsg(_mData.Encode())
-
-
-
-    if true then
-        return
-    end
-    AppConst.SocketPort = 2012
-    AppConst.SocketAddress = "127.0.0.1"
-    networkMgr:SendConnect()
-
-    TimeTick.Create() --创建计时器
-    this.InitViewPanels()
-
-    logWarn("LuaFramework InitOK--->>>")
-    this.Init()
-
-    MessageCtrl.Show()
-
-    -- resMgr:LoadPrefab
-    resMgr:LoadSprite(
-        "prompt_asset",
-        "1.png",
-        function(o)
-            local b = o[0]
-
-            local img = find("Test"):GetComponent("Image")
-            log("img == " .. tostring(img))
-            img.sprite = b
-            log("o == " .. (b.triangles[0]))
-        end
-    )
 end
 
 --销毁--
