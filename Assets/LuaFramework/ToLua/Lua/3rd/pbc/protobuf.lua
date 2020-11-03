@@ -11,6 +11,7 @@ local print = print
 local io = io
 local tinsert = table.insert
 local rawget = rawget
+local rawset = rawset
 
 module "protobuf"
 
@@ -485,7 +486,18 @@ local function default_table(typename)
 		return v
 	end
 
-	v = { __index = assert(decode_message(typename , "")) }
+	local default_inst = assert(decode_message(typename , ""))
+	v = { 
+		__index = function(tb, key)
+			local ret = default_inst[key]
+			if 'table' ~= type(ret) then
+				return ret
+			end 
+			ret = setmetatable({}, { __index = ret })
+			rawset(tb, key, ret)
+			return ret
+		end
+	}
 
 	default_cache[typename]  = v
 	return v
@@ -550,6 +562,26 @@ function register_file(filename)
 	local buffer = f:read "*a"
 	c._env_register(P, buffer)
 	f:close()
+end
+
+function enum_id(enum_type, enum_name)
+	return c._env_enum_id(P, enum_type, enum_name)
+end
+
+function extract(tbl)
+    local typename = rawget(tbl , 1)
+    local buffer = rawget(tbl , 2)
+    if type(typename) == "string" and type(buffer) == "string" then
+        if check(typename) then
+            expand(tbl)
+        end
+    end
+
+    for k, v in pairs(tbl) do
+        if type(v) == "table" then
+            extract(v)
+        end
+    end
 end
 
 default=set_default

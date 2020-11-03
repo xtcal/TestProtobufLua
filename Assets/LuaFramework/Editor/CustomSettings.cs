@@ -216,6 +216,7 @@ public static class CustomSettings {
 		_GT (typeof (RuntimePlatform)),
 
 		_GT (typeof (UDPClient)),
+		_GT (typeof (LuaComponent)),
 
 	};
 

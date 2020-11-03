@@ -254,18 +254,8 @@ local function _fix_field(namespace , field, all)
 	elseif type_name == nil then
 		return
 	end
-	-- log("namespace == " .. namespace)
-	-- log("field.type_name == " .. field.type_name)
-
-	-- for key, value in pairs(all) do
-	-- 	log("key == " .. tostring(key))
-	-- 	log("val == " .. tostring(value))
-	-- end
-
 
 	local full_name = assert(_match_name(namespace, field.type_name, all) , field.type_name , all)
-
-	-- log("full_name =========" .. tostring(full_name))
 
 	field.type_name = full_name
 	field.type = all[full_name]
@@ -394,7 +384,7 @@ function parser.register(fileset , path)
 	for _,file in ipairs(files) do
 		_fix_typename(file,all)
 	end
-	
+
 	local pbencode = pb.encode("google.protobuf.FileDescriptorSet" , { file = files })
 
 	if pbencode == nil then

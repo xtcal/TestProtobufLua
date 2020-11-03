@@ -69,6 +69,7 @@
      <Compile Include="Assets\LuaFramework\LiteNetLib\Utils\NetDataReader.cs" />
      <Compile Include="Assets\LuaFramework\LiteNetLib\Utils\NetDataWriter.cs" />
      <Compile Include="Assets\LuaFramework\LiteNetLib\Utils\NetSerializer.cs" />
+     <Compile Include="Assets\LuaFramework\LuaComponent.cs" />
      <Compile Include="Assets\LuaFramework\Scripts\Common\LuaBehaviour.cs" />
      <Compile Include="Assets\LuaFramework\Scripts\Common\LuaLoader.cs" />
      <Compile Include="Assets\LuaFramework\Scripts\Common\MethodExtension.cs" />
@@ -226,6 +227,7 @@
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\DG_Tweening_TweenerWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\DelegateFactory.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaBinder.cs" />
+     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaComponentWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_AppConstWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_ByteBufferWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_GameManagerWrap.cs" />
@@ -346,13 +348,27 @@
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\ViewWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\LuaConst.cs" />
      <Compile Include="Assets\LuaFramework\UDPClient.cs" />
-     <None Include="Assets\link.xml" />
+     <None Include="Assets\Plugins\Protobuf\Core\Plugins\Google.ProtocolBuffers.xml" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\requires.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_mac\protobuf.egg-info\namespace_packages.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\SOURCES.txt" />
+     <None Include="Assets\Plugins\Protobuf\Core\Plugins\Google.ProtocolBuffers.Serialization.xml" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\README.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\plugin\新建文本文档.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\dependency_links.txt" />
      <None Include="Assets\StreamingAssets\files.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_mac\protobuf.egg-info\SOURCES.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\namespace_packages.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\top_level.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_mac\README.txt" />
      <None Include="Assets\LuaFramework\ToLua\Injection\InjectionBridgeEditorInfo.xml" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_mac\protobuf.egg-info\requires.txt" />
      <None Include="Assets\LuaFramework\ToLua\readme.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_mac\protobuf.egg-info\top_level.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_mac\protobuf.egg-info\dependency_links.txt" />
      <None Include="Assets\LuaFramework\ToLua\Injection\LuaInjectionSkipPaths.txt" />
      <None Include="Assets\LuaFramework\ToLua\Injection\InjectionBlackList.txt" />
-     <None Include="Assets\DOTween\DOTween43.xml" />
+     <None Include="Assets\Plugins\DOTween\DOTween43.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity5.6.4p1/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -374,12 +390,6 @@
  <Reference Include="UnityEngine.VR">
  <HintPath>D:/Program Files/Unity5.6.4p1/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
- <Reference Include="DOTween">
- <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/DOTween/DOTween.dll</HintPath>
- </Reference>
- <Reference Include="DOTween43">
- <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/DOTween/DOTween43.dll</HintPath>
- </Reference>
  <Reference Include="CString">
  <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/CString.dll</HintPath>
  </Reference>
@@ -392,12 +402,28 @@
  <Reference Include="protobuf-net">
  <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/protobuf-net.dll</HintPath>
  </Reference>
+ <Reference Include="DOTween">
+ <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/DOTween/DOTween.dll</HintPath>
+ </Reference>
+ <Reference Include="DOTween43">
+ <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/DOTween/DOTween43.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.ProtocolBuffers">
+ <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/Protobuf/Core/Plugins/Google.ProtocolBuffers.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.ProtocolBuffers.Serialization">
+ <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/Protobuf/Core/Plugins/Google.ProtocolBuffers.Serialization.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Program Files/Unity5.6.4p1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Common">
  <HintPath>D:/Program Files/Unity5.6.4p1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{E63A9B54-4805-FFAF-725F-B1C695349E58}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -204,6 +204,19 @@ namespace EmmyLua {
 				typeof (AnimatorClipInfo),
 				typeof (RuntimeAnimatorController),
 				typeof (Convert),
+				typeof (AssetBundleRequest),
+				typeof (AssetBundleCreateRequest),
+				typeof (Encoding),
+				typeof (Color32),
+				// typeof (Spine.TrackEntry),
+				// typeof (Spine.AnimationStateData),
+				// typeof (Spine.Skeleton),
+				// typeof (Spine.SkeletonData),
+				// typeof (Spine.Unity.SkeletonDataAsset),
+				typeof (TextAsset),
+				// typeof (Spine.Unity.AtlasAsset),
+				typeof (GameObjectPool),
+				typeof (LuaFunction),
 			};
 			foreach (var item in types) {
 				GenType (item, true, path);
@@ -213,11 +226,42 @@ namespace EmmyLua {
 				GenType (item.type, true, path);
 			}
 
+			List<string> keyHave = new List<string> ();
 			var sb = new StringBuilder ();
-			foreach (var key in dic.Keys) {
-				sb.AppendLine (key + " = {}");
-				foreach (var val in dic[key]) {
-					sb.AppendLine (key + "." + val + " = {} ---@type " + val);
+			foreach (var _namespace in dic.Keys) {
+				foreach (var _class in dic[_namespace]) {
+					if (_namespace == _class) {		//相等表示没有命名空间，直接给类型
+						if (!keyHave.Contains (_namespace)) {
+							keyHave.Add (_namespace);
+							sb.AppendLine (_namespace + " = {} ---@type " + _class);
+						}
+						continue;
+					}
+
+					if (!keyHave.Contains (_namespace)) {	//有命名空间未定义，先定义命名空间
+						if (_namespace.Contains (".")) {
+							var arr = _namespace.Split ('.');
+							var _key = "";
+							for (int i = 0; i < arr.Length; i++) {
+								_key += arr[i];
+								if (!keyHave.Contains (_key)) {
+									keyHave.Add (_key);
+									sb.AppendLine (_key + " = {}");
+								}
+								_key += ".";
+							}
+						} else {
+							keyHave.Add (_namespace);
+							sb.AppendLine (_namespace + " = {}");
+						}
+					}
+
+					var newKey = _namespace + "." + _class;
+					if (!keyHave.Contains (newKey)) {
+						keyHave.Add (newKey);
+						sb.AppendLine (newKey + " = {} ---@type " + _class);
+						continue;
+					}
 				}
 			}
 			File.WriteAllText (path + "_all.lua", sb.ToString (), Encoding.UTF8);
@@ -235,13 +279,23 @@ namespace EmmyLua {
 			string filename = tname;
 			if (t.Namespace != null) {
 				filename = t.Namespace + "." + tname;
-				if (!dic.ContainsKey (t.Namespace)) {
-					dic.Add (t.Namespace, new List<string> ());
+				string _namespace = t.Namespace;
+				if (t.IsNested) { //这个类是被嵌套的，要先找出向上嵌套的类，比如 UnityEngine.UI.Dropdown.OptionData 是 嵌套在 UnityEngine.UI.Dropdown 底下的
+					filename = t.DeclaringType + "." + tname;
+					_namespace = t.DeclaringType.ToString ();
 				}
-				dic[t.Namespace].Add (tname);
+				if (!dic.ContainsKey (_namespace)) {
+					dic.Add (_namespace, new List<string> ());
+				}
+				dic[_namespace].Add (tname);
+			} else {
+				if (!dic.ContainsKey (tname)) {
+					dic.Add (tname, new List<string> ());
+				}
+				dic[tname].Add (tname);
 			}
 
-			string className = bindType != null ? bindType.libName : tname;
+			// string className = bindType != null ? bindType.libName : tname;
 			if (!CheckType (t.BaseType)) {
 				sb.AppendFormat ("---@class {0}\n", tname);
 			} else {
@@ -314,9 +368,7 @@ namespace EmmyLua {
 		static string GetLuaType (Type t) {
 			string tname = t.Name;
 			tname = tname.Replace ("`2", "").Replace ("`1", "").Replace ("&", "");
-			if (t.IsEnum ||
-				t == typeof (double)
-			)
+			if (t.IsEnum || t == typeof (double))
 				return "number";
 			if (t == typeof (bool))
 				return "bool";

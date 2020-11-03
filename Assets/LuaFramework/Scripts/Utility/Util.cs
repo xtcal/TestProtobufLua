@@ -166,52 +166,38 @@ namespace LuaFramework {
 			}
 		}
 
-
-        public static string SHA1file(string file, ref long length)
-        {
-            try
-            {
-                FileStream fs = new FileStream(file, FileMode.Open);
-                length = fs.Length;
-                System.Security.Cryptography.SHA1Managed Sha1 = new System.Security.Cryptography.SHA1Managed();
-                byte[] retVal = Sha1.ComputeHash(fs);
-                fs.Close();
-                return System.Convert.ToBase64String(retVal);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("SHA1file() fail, error:" + ex.Message);
-            }
-        }
-        public static string SHA1file(string file)
-        {
-            try
-            {
-                FileStream fs = new FileStream(file, FileMode.Open);
-                System.Security.Cryptography.SHA1Managed Sha1 = new System.Security.Cryptography.SHA1Managed();
-                byte[] retVal = Sha1.ComputeHash(fs);
-                fs.Close();
-                return System.Convert.ToBase64String(retVal);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("SHA1file() fail, error:" + ex.Message);
-            }
-        }
-        public static string SHA1file(byte[] buffer)
-        {
-            try
-            {
-                System.Security.Cryptography.SHA1Managed Sha1 = new System.Security.Cryptography.SHA1Managed();
-                byte[] retVal = Sha1.ComputeHash(buffer);
-                return System.Convert.ToBase64String(retVal);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("SHA1file() fail, error:" + ex.Message);
-            }
-        }
-
+		public static string SHA1file (string file, ref long length) {
+			try {
+				FileStream fs = new FileStream (file, FileMode.Open);
+				length = fs.Length;
+				System.Security.Cryptography.SHA1Managed Sha1 = new System.Security.Cryptography.SHA1Managed ();
+				byte[] retVal = Sha1.ComputeHash (fs);
+				fs.Close ();
+				return System.Convert.ToBase64String (retVal);
+			} catch (Exception ex) {
+				throw new Exception ("SHA1file() fail, error:" + ex.Message);
+			}
+		}
+		public static string SHA1file (string file) {
+			try {
+				FileStream fs = new FileStream (file, FileMode.Open);
+				System.Security.Cryptography.SHA1Managed Sha1 = new System.Security.Cryptography.SHA1Managed ();
+				byte[] retVal = Sha1.ComputeHash (fs);
+				fs.Close ();
+				return System.Convert.ToBase64String (retVal);
+			} catch (Exception ex) {
+				throw new Exception ("SHA1file() fail, error:" + ex.Message);
+			}
+		}
+		public static string SHA1file (byte[] buffer) {
+			try {
+				System.Security.Cryptography.SHA1Managed Sha1 = new System.Security.Cryptography.SHA1Managed ();
+				byte[] retVal = Sha1.ComputeHash (buffer);
+				return System.Convert.ToBase64String (retVal);
+			} catch (Exception ex) {
+				throw new Exception ("SHA1file() fail, error:" + ex.Message);
+			}
+		}
 
 		/// <summary>
 		/// 清除所有子节点
@@ -376,6 +362,21 @@ namespace LuaFramework {
 			}
 #endif
 			return true;
+		}
+
+		public static void ShowList (string[] strs) {
+			foreach (var item in strs) {
+				Debug.Log (item);
+			}
+		}
+		public static void ShowListss (Dictionary<string,string> ss) {
+			foreach (var item in ss) {
+				Debug.Log (item);
+			}
+		}
+		public static object Dic () {
+			Dictionary<string,string> ss = new Dictionary<string, string>();
+			return ss;
 		}
 	}
 }

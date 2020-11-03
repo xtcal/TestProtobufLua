@@ -49,28 +49,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\AssetBundleBrowserMain.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\AssetBundleBuildTab.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\AssetBundleDataSource\ABDataSource.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\AssetBundleDataSource\ABDataSourceProvider.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\AssetBundleDataSource\AssetDatabaseABDataSource.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\AssetBundleManageTab.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\AssetBundleModel\ABModel.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\AssetBundleModel\ABModelAssetInfo.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\AssetBundleModel\ABModelBundleInfo.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\AssetBundleTree.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\AssetListTree.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\BundleDetailList.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\InspectTab\AssetBundleInspectTab.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\InspectTab\AssetBundleRecord.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\InspectTab\InspectSingleBundle.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\InspectTab\InspectTreeView.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\MessageList.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Editor\MessageSystem.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Tests\Editor\ABModelTests.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Tests\Editor\AssetBundleRecordTests.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Tests\Editor\Util\ABModelUtil.cs" />
-     <Compile Include="Assets\AssetBundles-Browser-master\Tests\Editor\Util\TestUtil.cs" />
      <Compile Include="Assets\LuaFramework\Editor\CustomSettings.cs" />
      <Compile Include="Assets\LuaFramework\Editor\EmmyLuaApiExporter.cs" />
      <Compile Include="Assets\LuaFramework\Editor\EmmyProtoBufExport.cs" />
@@ -98,13 +76,27 @@
      <Compile Include="Assets\LuaFramework\ToLua\Injection\Editor\ToLuaInjectionHelper.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Injection\Editor\ToLuaText.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Injection\Editor\ToluaInjectionBlackListPanel.cs" />
-     <None Include="Assets\link.xml" />
+     <None Include="Assets\Plugins\Protobuf\Core\Plugins\Google.ProtocolBuffers.xml" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\requires.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_mac\protobuf.egg-info\namespace_packages.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\SOURCES.txt" />
+     <None Include="Assets\Plugins\Protobuf\Core\Plugins\Google.ProtocolBuffers.Serialization.xml" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\README.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\plugin\新建文本文档.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\dependency_links.txt" />
      <None Include="Assets\StreamingAssets\files.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_mac\protobuf.egg-info\SOURCES.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\namespace_packages.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\top_level.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_mac\README.txt" />
      <None Include="Assets\LuaFramework\ToLua\Injection\InjectionBridgeEditorInfo.xml" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_mac\protobuf.egg-info\requires.txt" />
      <None Include="Assets\LuaFramework\ToLua\readme.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_mac\protobuf.egg-info\top_level.txt" />
+     <None Include="Assets\Plugins\protoc-gen-lua-bin\python_mac\protobuf.egg-info\dependency_links.txt" />
      <None Include="Assets\LuaFramework\ToLua\Injection\LuaInjectionSkipPaths.txt" />
      <None Include="Assets\LuaFramework\ToLua\Injection\InjectionBlackList.txt" />
-     <None Include="Assets\DOTween\DOTween43.xml" />
+     <None Include="Assets\Plugins\DOTween\DOTween43.xml" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>D:/Program Files/Unity5.6.4p1/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>
@@ -165,12 +157,6 @@
  <Reference Include="UnityEditor.WindowsStandalone.Extensions">
  <HintPath>D:/Program Files/Unity5.6.4p1/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
  </Reference>
- <Reference Include="DOTween">
- <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/DOTween/DOTween.dll</HintPath>
- </Reference>
- <Reference Include="DOTween43">
- <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/DOTween/DOTween43.dll</HintPath>
- </Reference>
  <Reference Include="CString">
  <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/CString.dll</HintPath>
  </Reference>
@@ -183,6 +169,18 @@
  <Reference Include="protobuf-net">
  <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/protobuf-net.dll</HintPath>
  </Reference>
+ <Reference Include="DOTween">
+ <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/DOTween/DOTween.dll</HintPath>
+ </Reference>
+ <Reference Include="DOTween43">
+ <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/DOTween/DOTween43.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.ProtocolBuffers">
+ <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/Protobuf/Core/Plugins/Google.ProtocolBuffers.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.ProtocolBuffers.Serialization">
+ <HintPath>E:/Zhangxin/github/TestProtobufLua/Assets/Plugins/Protobuf/Core/Plugins/Google.ProtocolBuffers.Serialization.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Program Files/Unity5.6.4p1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
  </Reference>
@@ -191,8 +189,12 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{E63A9B54-4805-FFAF-725F-B1C695349E58}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{98C056D1-D895-4D88-5E7E-21F47E70DBE9}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+    <ProjectReference Include="Assembly-CSharp-Editor-firstpass.csproj">
+      <Project>{6004959F-BCC7-93DD-3C7A-6FB56C18944E}</Project>      <Name>Assembly-CSharp-Editor-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

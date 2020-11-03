@@ -14,6 +14,7 @@ public static class LuaBinder
 		UIEventListenerWrap.Register(L);
 		TimeManagerWrap.Register(L);
 		UDPClientWrap.Register(L);
+		LuaComponentWrap.Register(L);
 		ViewWrap.Register(L);
 		BaseWrap.Register(L);
 		ManagerWrap.Register(L);

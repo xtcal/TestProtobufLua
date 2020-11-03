@@ -500,7 +500,7 @@ return {
 			["ShowTips"] = 214, 
 			["Start"] = 213, 
 		},
-	["TestProtoBuffer"] = 
+	["testPbcfer"] =
 		{
 			["Awake"] = 140, 
 			["Bind"] = 142, 

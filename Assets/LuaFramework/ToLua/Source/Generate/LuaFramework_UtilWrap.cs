@@ -29,6 +29,9 @@ public class LuaFramework_UtilWrap
 		L.RegFunction("CheckRuntimeFile", CheckRuntimeFile);
 		L.RegFunction("CallMethod", CallMethod);
 		L.RegFunction("CheckEnvironment", CheckEnvironment);
+		L.RegFunction("ShowList", ShowList);
+		L.RegFunction("ShowListss", ShowListss);
+		L.RegFunction("Dic", Dic);
 		L.RegFunction("New", _CreateLuaFramework_Util);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("DataPath", get_DataPath, null);
@@ -477,6 +480,54 @@ public class LuaFramework_UtilWrap
 			ToLua.CheckArgsCount(L, 0);
 			bool o = LuaFramework.Util.CheckEnvironment();
 			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShowList(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string[] arg0 = ToLua.CheckStringArray(L, 1);
+			LuaFramework.Util.ShowList(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShowListss(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			System.Collections.Generic.Dictionary<string,string> arg0 = (System.Collections.Generic.Dictionary<string,string>)ToLua.CheckObject(L, 1, typeof(System.Collections.Generic.Dictionary<string,string>));
+			LuaFramework.Util.ShowListss(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Dic(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			object o = LuaFramework.Util.Dic();
+			ToLua.Push(L, o);
 			return 1;
 		}
 		catch (Exception e)

@@ -15,10 +15,24 @@ function UDPClient.UnInit() end
 ---@return void
 function UDPClient.SendMsg(str, ip) end
 ---@public
+---@param name string
+---@param data Byte[]
+---@param ip EndPoint
+---@return void
+function UDPClient.SendMsg(name, data, ip) end
+---@public
 ---@param data Byte[]
 ---@param ip EndPoint
 ---@return void
 function UDPClient.SendMsg(data, ip) end
+---@public
+---@param table LuaTable
+---@return string
+function UDPClient.GetData(table) end
+---@public
+---@param data Byte[]
+---@return void
+function UDPClient.ShowData(data) end
 ---@public
 ---@return void
 function UDPClient.GetRoomList() end

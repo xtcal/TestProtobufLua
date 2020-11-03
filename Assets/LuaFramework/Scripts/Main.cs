@@ -2,7 +2,6 @@
 using System.Collections;
 
 namespace LuaFramework {
-
     /// <summary>
     /// </summary>
     public class Main : MonoBehaviour {

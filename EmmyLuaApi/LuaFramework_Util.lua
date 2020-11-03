@@ -114,3 +114,14 @@ function Util.CallMethod(module, func, args) end
 ---@public
 ---@return bool
 function Util.CheckEnvironment() end
+---@public
+---@param strs String[]
+---@return void
+function Util.ShowList(strs) end
+---@public
+---@param ss Dictionary
+---@return void
+function Util.ShowListss(ss) end
+---@public
+---@return Object
+function Util.Dic() end

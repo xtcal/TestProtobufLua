@@ -4,7 +4,6 @@
 --
 -- Eg:
 -- echo '{ "testing" }' | ./lua2json.lua
--- ./lua2json.lua test.lua
 
 local json = require "cjson"
 local util = require "cjson.util"

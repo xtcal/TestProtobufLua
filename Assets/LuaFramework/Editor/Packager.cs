@@ -8,49 +8,25 @@ using UnityEditor;
 using UnityEngine;
 
 public class Packager {
-	public static string platform = string.Empty;
 	static List<string> paths = new List<string> ();
 	static List<string> files = new List<string> ();
 	static List<AssetBundleBuild> maps = new List<AssetBundleBuild> ();
 
-	///-----------------------------------------------------------
-	static string[] exts = { ".txt", ".xml", ".lua", ".assetbundle", ".json" };
-	static bool CanCopy (string ext) { //能不能复制
-		foreach (string e in exts) {
-			if (ext.Equals (e)) return true;
-		}
-		return false;
-	}
-
-	/// <summary>
-	/// 载入素材
-	/// </summary>
-	static UnityEngine.Object LoadAsset (string file) {
-		if (file.EndsWith (".lua")) file += ".txt";
-		return AssetDatabase.LoadMainAssetAtPath ("Assets/LuaFramework/Examples/Builds/" + file);
-	}
-
-	[MenuItem ("LuaFramework/Build Lua", false, 100)]
+	[MenuItem ("LuaFramework/Build protobuf Lua", false, 100)]
 	public static void BuildiPhoneResource () {
-		EmmyProtoBufExport.ExportApi (AppConst.FrameworkRoot + "/Lua/test/protobuf");
+		EmmyProtoBufExport.ExportApi ();
 	}
-
 #if UNITY_IOS
 	[MenuItem ("LuaFramework/Build iPhone Resource", false, 100)]
 	public static void BuildiPhoneResource () {
-		BuildTarget target = BuildTarget.iOS;
-		BuildAssetResource (target);
+		BuildAssetResource (BuildTarget.iOS);
 	}
-#endif
-
-#if UNITY_ANDROID
+#elif UNITY_ANDROID
 	[MenuItem ("LuaFramework/Build Android Resource", false, 101)]
 	public static void BuildAndroidResource () {
 		BuildAssetResource (BuildTarget.Android);
 	}
-#endif
-
-#if UNITY_EDITOR
+#elif UNITY_EDITOR
 	[MenuItem ("LuaFramework/Build Windows Resource", false, 102)]
 	public static void BuildWindowsResource () {
 		BuildAssetResource (BuildTarget.StandaloneWindows);
@@ -173,7 +149,6 @@ public class Packager {
 
 		AddBuildMap ("prompt" + AppConst.ExtName, "*.prefab", "Assets/LuaFramework/Examples/Builds/Prompt");
 		AddBuildMap ("message" + AppConst.ExtName, "*.prefab", "Assets/LuaFramework/Examples/Builds/Message");
-
 		AddBuildMap ("prompt_asset" + AppConst.ExtName, "*.png", "Assets/LuaFramework/Examples/Textures/Prompt");
 		AddBuildMap ("shared_asset" + AppConst.ExtName, "*.png", "Assets/LuaFramework/Examples/Textures/Shared");
 	}
@@ -190,7 +165,7 @@ public class Packager {
 			Directory.CreateDirectory (luaPath);
 		}
 		string[] luaPaths = {
-			AppDataPath + "/LuaFramework/lua/",
+			AppDataPath + "/lua/",
 			AppDataPath + "/LuaFramework/Tolua/Lua/"
 		};
 
@@ -236,7 +211,6 @@ public class Packager {
 		StreamWriter sw = new StreamWriter (fs);
 		for (int i = 0; i < files.Count; i++) {
 			string file = files[i];
-			string ext = Path.GetExtension (file);
 			if (file.EndsWith (".meta") || file.Contains (".DS_Store")) continue;
 
 			string md5 = Util.md5file (file);

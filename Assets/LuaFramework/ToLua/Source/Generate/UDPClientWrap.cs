@@ -10,6 +10,10 @@ public class UDPClientWrap
 		L.RegFunction("Init", Init);
 		L.RegFunction("UnInit", UnInit);
 		L.RegFunction("SendMsg", SendMsg);
+		L.RegFunction("GetData", GetData);
+		L.RegFunction("StringConvertToBytes", StringConvertToBytes);
+		L.RegFunction("BytesConvertToString", BytesConvertToString);
+		L.RegFunction("ShowData", ShowData);
 		L.RegFunction("GetRoomList", GetRoomList);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -68,13 +72,6 @@ public class UDPClientWrap
 				UDPClient.SendMsg(arg0);
 				return 0;
 			}
-			else if (count == 2 && TypeChecker.CheckTypes<string, System.Net.EndPoint>(L, 1))
-			{
-				string arg0 = ToLua.ToString(L, 1);
-				System.Net.EndPoint arg1 = (System.Net.EndPoint)ToLua.ToObject(L, 2);
-				UDPClient.SendMsg(arg0, arg1);
-				return 0;
-			}
 			else if (count == 2 && TypeChecker.CheckTypes<byte[], System.Net.EndPoint>(L, 1))
 			{
 				byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
@@ -82,10 +79,130 @@ public class UDPClientWrap
 				UDPClient.SendMsg(arg0, arg1);
 				return 0;
 			}
+			else if (count == 2 && TypeChecker.CheckTypes<string, byte[]>(L, 1))
+			{
+				string arg0 = ToLua.ToString(L, 1);
+				byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
+				UDPClient.SendMsg(arg0, arg1);
+				return 0;
+			}
+			else if (count == 2 && TypeChecker.CheckTypes<string, System.Net.EndPoint>(L, 1))
+			{
+				string arg0 = ToLua.ToString(L, 1);
+				System.Net.EndPoint arg1 = (System.Net.EndPoint)ToLua.ToObject(L, 2);
+				UDPClient.SendMsg(arg0, arg1);
+				return 0;
+			}
+			else if (count == 3)
+			{
+				string arg0 = ToLua.CheckString(L, 1);
+				byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
+				System.Net.EndPoint arg2 = (System.Net.EndPoint)ToLua.CheckObject<System.Net.EndPoint>(L, 3);
+				UDPClient.SendMsg(arg0, arg1, arg2);
+				return 0;
+			}
 			else
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: UDPClient.SendMsg");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetData(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			string o = UDPClient.GetData();
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int StringConvertToBytes(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 1)
+			{
+				string arg0 = ToLua.CheckString(L, 1);
+				byte[] o = UDPClient.StringConvertToBytes(arg0);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 2)
+			{
+				string arg0 = ToLua.CheckString(L, 1);
+				string arg1 = ToLua.CheckString(L, 2);
+				byte[] o = UDPClient.StringConvertToBytes(arg0, arg1);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UDPClient.StringConvertToBytes");
+			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int BytesConvertToString(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 1)
+			{
+				byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
+				string o = UDPClient.BytesConvertToString(arg0);
+				LuaDLL.lua_pushstring(L, o);
+				return 1;
+			}
+			else if (count == 2)
+			{
+				byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
+				string arg1 = ToLua.CheckString(L, 2);
+				string o = UDPClient.BytesConvertToString(arg0, arg1);
+				LuaDLL.lua_pushstring(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UDPClient.BytesConvertToString");
+			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShowData(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
+			UDPClient.ShowData(arg0);
+			return 0;
 		}
 		catch (Exception e)
 		{
