@@ -4,7 +4,7 @@ import "protoBase.proto";
 
 message CS_LoginUser
 {
-	optional uint32 uid = 1;
+	optional string uid = 1;
 	optional string userName = 2;
 	optional string passWord = 3;
 }

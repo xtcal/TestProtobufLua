@@ -26,9 +26,18 @@ function UDPClient.SendMsg(name, data, ip) end
 ---@return void
 function UDPClient.SendMsg(data, ip) end
 ---@public
----@param table LuaTable
 ---@return string
-function UDPClient.GetData(table) end
+function UDPClient.GetData() end
+---@public
+---@param _str string
+---@param _codeing string
+---@return Byte[]
+function UDPClient.StringConvertToBytes(_str, _codeing) end
+---@public
+---@param bytes Byte[]
+---@param _codeing string
+---@return string
+function UDPClient.BytesConvertToString(bytes, _codeing) end
 ---@public
 ---@param data Byte[]
 ---@return void

@@ -77,13 +77,13 @@ public class UDPClient : MonoBehaviour {
 
 	public static void SendMsg (byte[] data, EndPoint ip = null) {
 		var cs = DeSerialize<protoLoginUser.CS_LoginUser> (data);
-		Debug.Log (LitJson.JsonMapper.ToJson (data));
+		Debug.Log ("C# SendMsg data :"+LitJson.JsonMapper.ToJson (data));
 	}
 	public static string GetData () {
 		var user = new protoLoginUser.CS_LoginUser ();
-		user.uid = "1";
-		user.userName = "2";
-		user.passWord = "1";
+		user.uid = "GetData 111";
+		user.userName = "GetData 夏老湿";
+		user.passWord = "GetData 1234";
 		var data = Serialize (user);
 		var ret = System.Text.Encoding.UTF8.GetString (data);
 		return ret;
@@ -99,7 +99,7 @@ public class UDPClient : MonoBehaviour {
 	}
 
 	public static void ShowData (byte[] data) {
-		Debug.Log (LitJson.JsonMapper.ToJson (data));
+		Debug.Log ("ShowData data :"+LitJson.JsonMapper.ToJson (data));
 	}
 
 	public static void GetRoomList () {
@@ -116,7 +116,7 @@ public class UDPClient : MonoBehaviour {
 				//使用ProtoBuf工具的序列化方法
 				ProtoBuf.Serializer.Serialize<T> (ms, model);
 				//定义二级制数组，保存序列化后的结果
-				Debug.Log ("ms.Length==" + ms.Length);
+				Debug.Log ("Serialize data ms.Length :" + ms.Length);
 				byte[] result = new byte[ms.Length];
 				//将流的位置设为0，起始点
 				ms.Position = 0;

@@ -322,6 +322,7 @@ public class EmmyProtoBufExport {
 		}
 
 		sb = new StringBuilder ();
+		sb.AppendLine("---自动生成,方便表索引");
 		foreach (var item in strs) {
 			sb.AppendLine ("MsgData[\"" + item + "\"] = MsgData." + item);
 		}

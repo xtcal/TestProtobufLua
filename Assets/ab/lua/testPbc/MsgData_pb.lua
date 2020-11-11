@@ -4,7 +4,6 @@ local this = MsgData
 local Directory = System.IO.Directory
 local Path = System.IO.Path
 
-
 --初始化 消息proto
 function this.InitProtos()
 	local protos = {}
@@ -21,7 +20,6 @@ function this.InitProtos()
 			local ext = Path.GetExtension(cur)
 			if ext == ".lua" and file_name ~= "MsgData_tab" then
 				--lua脚本导入引用
-				log("cur == ", cur)
 				require("testPbc/lua/" .. file_name)
 			elseif ext == ".proto" then
 				--proto 注册引用
@@ -34,14 +32,14 @@ function this.InitProtos()
 	imp( UnityEngine.Application.dataPath .. "/ab/lua/testPbc/lua")
 
 
-	log("MsgData.InitProtos() protos==", table_tostring(protos))
+	warn("MsgData.InitProtos() protos==", table_tostring(protos))
 
 	if #protos > 0 then
 		local parser = require "3rd/pbc/parser"
 		parser.register(protos, lua_protobuf_dir)
 	end
 
-	require "testPbc/MsgData_tab"
+	--require "testPbc/MsgData_tab"
 
-	log("MsgData :" .. table_tostring(MsgData))
+	warn("MsgData :" .. table_tostring(MsgData))
 end

@@ -1,7 +1,7 @@
 MsgData.protoLoginUser = {}
 local protoLoginUser = MsgData.protoLoginUser
 ---@class protoLoginUser.CS_LoginUser 
----@field public uid number 
+---@field public uid string 
 ---@field public userName string 
 ---@field public passWord string 
 ---@return protoLoginUser.CS_LoginUser
@@ -10,9 +10,7 @@ function protoLoginUser.CS_LoginUser(code)
 	local _new = {}
 	_new._desc = "protoLoginUser.CS_LoginUser"
 	if code then
-		log(code.Length)
-		_new,b,c = protobuf.decode("protoLoginUser.CS_LoginUser", code, code.Length)
-		log(_new,b,c)
+		_new = protobuf.decode("protoLoginUser.CS_LoginUser", code)
 	end
 	function _new.Encode()
 		_new.Encode = nil

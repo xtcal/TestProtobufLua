@@ -1,3 +1,4 @@
+---自动生成,方便表索引
 MsgData["protoBase.GIPEndPoint"] = MsgData.protoBase.GIPEndPoint
 MsgData["protoBase.GVector3"] = MsgData.protoBase.GVector3
 MsgData["protoBase.MessageData"] = MsgData.protoBase.MessageData

@@ -354,7 +354,6 @@
      <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\SOURCES.txt" />
      <None Include="Assets\Plugins\Protobuf\Core\Plugins\Google.ProtocolBuffers.Serialization.xml" />
      <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\README.txt" />
-     <None Include="Assets\Plugins\protoc-gen-lua-bin\plugin\新建文本文档.txt" />
      <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\dependency_links.txt" />
      <None Include="Assets\StreamingAssets\files.txt" />
      <None Include="Assets\Plugins\protoc-gen-lua-bin\python_mac\protobuf.egg-info\SOURCES.txt" />
