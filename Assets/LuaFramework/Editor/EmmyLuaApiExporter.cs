@@ -14,7 +14,7 @@ using UnityEngine.UI;
 
 namespace EmmyLua {
 	public static class EmmyLuaApiExporter {
-		[MenuItem ("EmmyLua/导出EmmyLuaApi", false, 14)]
+		[MenuItem ("Tools/导出EmmyLuaApi", false, 14)]
 		static void Gen () {
 			string path = "./EmmyLuaApi/";
 			if (Directory.Exists (path)) {

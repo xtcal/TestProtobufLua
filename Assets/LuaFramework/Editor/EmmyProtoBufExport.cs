@@ -197,6 +197,10 @@ public class EmmyProtoBufExport {
 		"sfixed64",
 	};
 
+	[MenuItem ("Tools/Build protobuf Lua", false, 100)]
+	public static void BuildiPhoneResource () {
+		EmmyProtoBufExport.ExportApi ();
+	}
 	static string dirUrl = Application.dataPath + "/ab/lua/testPbc";
 	public static void ExportApi () {
 		string[] files = Directory.GetFiles (dirUrl + "/proto", "*.proto");
@@ -237,12 +241,12 @@ public class EmmyProtoBufExport {
 				for (int i = 0; i < allLine.Length; i++) {
 					string temp = allLine[i].Trim ().Replace (";", "");
 
+					// Debug.Log ("one line temp=" + temp);
+
 					if (isEnum && temp.Equals ("}")) {	//到语句块结尾了
 						sb.AppendLine ("\t},");
 						continue;
 					}
-
-					// Debug.Log ("one line temp=" + temp);
 
 					string zhushi = Regex.Match (temp, "//.*").Value;
 					if (zhushi != "") {

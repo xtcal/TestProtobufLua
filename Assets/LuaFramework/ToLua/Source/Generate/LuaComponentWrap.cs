@@ -14,7 +14,6 @@ public class LuaComponentWrap
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("components", get_components, set_components);
-		L.RegVar("_keys", get__keys, set__keys);
 		L.EndClass();
 	}
 
@@ -127,25 +126,6 @@ public class LuaComponentWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get__keys(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			LuaComponent obj = (LuaComponent)o;
-			System.Collections.Generic.List<string> ret = obj._keys;
-			ToLua.PushSealed(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index _keys on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_components(IntPtr L)
 	{
 		object o = null;
@@ -161,25 +141,6 @@ public class LuaComponentWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index components on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set__keys(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			LuaComponent obj = (LuaComponent)o;
-			System.Collections.Generic.List<string> arg0 = (System.Collections.Generic.List<string>)ToLua.CheckObject(L, 2, typeof(System.Collections.Generic.List<string>));
-			obj._keys = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index _keys on a nil value");
 		}
 	}
 }

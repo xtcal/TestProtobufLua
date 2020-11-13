@@ -11,15 +11,15 @@ public class LuaComponent : MonoBehaviour {
 		}
 		return table;
 	}
-#if UNITY_EDITOR
-	public List<string> _keys = new List<string> ();
-#endif
+// #if UNITY_EDITOR
+// 	public List<string> _keys = new List<string> ();
+// #endif
 	public bool Add (string name, LuaTable table) {
 		if (!components.ContainsKey (name)) {
 			components.Add (name, table);
-#if UNITY_EDITOR
-			_keys.Add (name);
-#endif
+// #if UNITY_EDITOR
+// 			_keys.Add (name);
+// #endif
 			return true;
 		}
 		return false;
@@ -27,9 +27,9 @@ public class LuaComponent : MonoBehaviour {
 	public bool Remove (string name) {
 		if (components.ContainsKey (name)) {
 			components.Remove (name);
-#if UNITY_EDITOR
-			_keys.Remove (name);
-#endif
+// #if UNITY_EDITOR
+// 			_keys.Remove (name);
+// #endif
 			return true;
 		}
 		return false;
@@ -37,9 +37,9 @@ public class LuaComponent : MonoBehaviour {
 
 	public void Clear () {
 		components.Clear ();
-#if UNITY_EDITOR
-		_keys.Clear ();
-#endif
+// #if UNITY_EDITOR
+// 		_keys.Clear ();
+// #endif
 	}
 	private void OnDestroy () {
 		components.Clear ();

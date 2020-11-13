@@ -20,14 +20,13 @@ namespace LuaFramework {
 		/// 复制到自己的Webserver上面，并修改下面的WebUrl。
 		/// </summary>
 		public const bool UpdateMode = false; //更新模式-默认关闭 
-		public const bool LuaByteMode = false; //Lua字节码模式-默认关闭 
-		public const bool LuaBundleMode = false; //Lua代码AssetBundle模式
+		public const bool LuaBundleMode = true; //Lua代码AssetBundle模式
 
 		public const int TimerInterval = 1;
 		public const int GameFrameRate = 30; //游戏帧频
 
 		public const string AppName = "LuaFramework"; //应用程序名称
-		public const string LuaTempDir = "Lua/"; //临时目录
+		public const string LuaTempDir = "lua2txt/"; //临时目录
 		public const string AppPrefix = AppName + "_"; //应用程序前缀
 		public const string ExtName = ".unity3d"; //素材扩展名
 		public const string AssetDir = "StreamingAssets"; //素材目录 
