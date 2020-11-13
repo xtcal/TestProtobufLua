@@ -211,46 +211,53 @@ public class EmmyProtoBufExport {
 				packageName = Path.GetFileNameWithoutExtension (path);
 			}
 			sb = new StringBuilder ();
-			sb.AppendLine ("MsgData." + packageName + " = {}");
-			sb.AppendLine ("local " + packageName + " = MsgData." + packageName);
+			sb.AppendLine ("MsgData." + packageName + " = {");
 
 			MatchCollection con = Regex.Matches (proBufStr, @"[message|enum].*[\s\S]?.*{.*[\s\S]+?(}+?)");
 			foreach (Match item in con) { //每个 { } 块
-				Debug.Log (item.Value);
+
+				// Debug.Log (item.Value);
+
 				string[] allLine = item.Value.Split ('\n');
 				string firstLine = allLine[0];
 
-				string cName = "";
+				string mName = "";
 				bool isClass = false;
 				bool isEnum = false;
 				if (Regex.IsMatch (firstLine, "message")) { //类
-					cName = Regex.Replace (firstLine, "//.*", "").Replace ("message", "").Replace ("{", "").Trim ();
+					mName = Regex.Replace (firstLine, "//.*", "").Replace ("message", "").Replace ("{", "").Trim ();
 					isClass = true;
 				} else if (Regex.IsMatch (firstLine, "enum")) { //枚举
-					cName = Regex.Replace (firstLine, "//.*", "").Replace ("enum", "").Replace ("{", "").Trim ();
+					mName = Regex.Replace (firstLine, "//.*", "").Replace ("enum", "").Replace ("{", "").Trim ();
 					isEnum = true;
 				}
 
-				string pname = packageName + "." + cName;
-				// sb.AppendLine ("---@type " + pname);
-				// sb.AppendLine (pname + " = {}");
+				string pname = packageName + "." + mName;
 
 				for (int i = 0; i < allLine.Length; i++) {
 					string temp = allLine[i].Trim ().Replace (";", "");
+
+					if (isEnum && temp.Equals ("}")) {	//到语句块结尾了
+						sb.AppendLine ("\t},");
+						continue;
+					}
+
+					// Debug.Log ("one line temp=" + temp);
+
 					string zhushi = Regex.Match (temp, "//.*").Value;
 					if (zhushi != "") {
 						zhushi = zhushi.Replace ("//", "");
 					}
 					if (i == 0) {
-						sb.AppendLine ("---@class " + pname + " " + zhushi);
+						sb.AppendLine ("\t---@class " + pname + " " + zhushi);
 						if (isEnum) {
-							sb.AppendLine (pname + " = {}");
+							sb.AppendLine ("\t" + mName + " = {");
 						}
 					} else {
 						if (temp.IndexOf ("=") != -1) {
 							string[] temps = temp.Split (' ');
 							if (isClass) {
-								sb.Append ("---@field public " + temps[2] + " ");
+								sb.Append ("\t---@field public " + temps[2] + " ");
 								string firstType = temps[1].Trim ();
 								if (firstType == "string") {
 									sb.Append ("string");
@@ -273,8 +280,9 @@ public class EmmyProtoBufExport {
 							} else if (isEnum) {
 								if (zhushi != "") {
 									zhushi = "---" + zhushi;
+									sb.AppendLine ("\t\t" + zhushi);
 								}
-								sb.AppendLine (pname + "." + temps[0] + " = " + Regex.Replace (temps[2], "//.*", "") + zhushi);
+								sb.AppendLine ("\t\t" + temps[0] + " = " + Regex.Replace (temps[2], "//.*", "") + ",");
 							}
 						}
 					}
@@ -282,51 +290,28 @@ public class EmmyProtoBufExport {
 
 				if (isClass) {
 					strs.Add (pname);
-					sb.AppendLine ("---@return " + pname);
-					sb.AppendLine ("function " + pname + "(code)");
-					sb.AppendLine ("\t---@type " + pname);
-					sb.AppendLine ("\tlocal _new = {}");
-					sb.AppendLine ("\t_new._desc = \"" + pname + "\"");
-					sb.AppendLine ("\tif code then");
-					sb.AppendLine ("\t\t_new = protobuf.decode(\"" + pname + "\", code)");
-					sb.AppendLine ("\tend");
-
-					sb.AppendLine ("\tfunction _new.Encode()");
-					sb.AppendLine ("\t\t_new.Encode = nil");
-					sb.AppendLine ("\t\t_new._desc = nil");
-					sb.AppendLine ("\t\treturn protobuf.encode(\"" + pname + "\", _new)");
-					sb.AppendLine ("\tend");
-
-					sb.AppendLine ("\treturn _new");
-					sb.AppendLine ("end");
-
-					// sb.AppendLine ("function " + pname + "(code)");
-					// sb.AppendLine ("\tif code then");
-					// sb.AppendLine ("\t\treturn protobuf.decode(\"" + pname + "\", code)");
-					// sb.AppendLine ("\tend");
-					// sb.AppendLine ("\treturn {}");
-					// sb.AppendLine ("end");
-
-					// sb.AppendLine ("function " + pname + ":Encode()");
-					// sb.AppendLine ("\treturn protobuf.encode(\"" + pname + "\", self.data)");
-					// sb.AppendLine ("end");
+					sb.AppendLine ("\t---@return " + pname);
+					sb.AppendLine ("\t" + mName + " = function (code)");
+					sb.AppendLine ("\t\treturn MsgData.GenData(\"" + pname + "\",code)");
+					sb.AppendLine ("\tend,");
 				}
 
 				if (isClass || isEnum) {
 					sb.AppendLine ("");
 				}
 			}
-			Debug.Log (sb.ToString ());
 
+			sb.Append ("}");
+			Debug.LogWarning (sb.ToString ());
 			File.WriteAllText (dirUrl + "/lua/" + Path.GetFileNameWithoutExtension (path) + "_pb.lua", sb.ToString ());
 		}
 
-		sb = new StringBuilder ();
-		sb.AppendLine("---自动生成,方便表索引");
-		foreach (var item in strs) {
-			sb.AppendLine ("MsgData[\"" + item + "\"] = MsgData." + item);
-		}
-		File.WriteAllText (dirUrl + "/MsgData_tab.lua", sb.ToString ());
+		// sb = new StringBuilder ();
+		// sb.AppendLine("---自动生成,方便表索引");
+		// foreach (var item in strs) {
+		// 	sb.AppendLine ("MsgData[\"" + item + "\"] = MsgData." + item);
+		// }
+		// File.WriteAllText (dirUrl + "/MsgData_tab.lua", sb.ToString ());
 	}
 	public static void ExportApi (string inPath, string outPath, string name) {
 		string proBufStr = File.ReadAllText (inPath, Encoding.UTF8);

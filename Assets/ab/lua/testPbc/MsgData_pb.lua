@@ -1,3 +1,5 @@
+require "3rd/pbc/protobuf"
+
 MsgData = {}
 local this = MsgData
 
@@ -42,4 +44,18 @@ function this.InitProtos()
 	--require "testPbc/MsgData_tab"
 
 	warn("MsgData :" .. table_tostring(MsgData))
+end
+
+function this.GenData(str,code)
+	local _new = {}
+	_new._desc = str
+	if code then
+		_new = protobuf.decode(str, code)
+	end
+	function _new.Encode()
+		_new.Encode = nil
+		_new._desc = nil
+		return protobuf.encode(str, _new)
+	end
+	return _new
 end

@@ -22,7 +22,7 @@ message MessageData{
 
 enum Corpus {
 	UNIVERSAL = 0;
-	WEB = 1;
+	WEB = 1; //测试
 	IMAGES = 2;
 	LOCAL = 3;
 	NEWS = 4;
