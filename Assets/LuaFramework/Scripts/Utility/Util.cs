@@ -224,18 +224,15 @@ namespace LuaFramework {
 		/// </summary>
 		public static string DataPath {
 			get {
-				string game = AppConst.AppName.ToLower ();
 				if (Application.isMobilePlatform) {
-					return Application.persistentDataPath + "/" + game + "/";
-				}
-				if (AppConst.DebugMode) {
+					return Application.persistentDataPath + "/" + AppConst.AssetDir + "/";
+				} else if (AppConst.DebugMode) {
 					return Application.dataPath + "/" + AppConst.AssetDir + "/";
-				}
-				if (Application.platform == RuntimePlatform.OSXEditor) {
+				} else if (Application.platform == RuntimePlatform.OSXEditor) {
 					int i = Application.dataPath.LastIndexOf ('/');
-					return Application.dataPath.Substring (0, i + 1) + game + "/";
+					return Application.dataPath.Substring (0, i + 1) + AppConst.AssetDir + "/";
 				}
-				return "c:/" + game + "/";
+				return "c:/" + AppConst.AssetDir + "/";
 			}
 		}
 
@@ -293,15 +290,15 @@ namespace LuaFramework {
 		}
 
 		public static void Log (string str) {
-			Debug.Log (str);
+			Debugger.Log (str);
 		}
 
 		public static void LogWarning (string str) {
-			Debug.LogWarning (str);
+			Debugger.LogWarning (str);
 		}
 
 		public static void LogError (string str) {
-			Debug.LogError (str);
+			Debugger.LogError (str);
 		}
 
 		/// <summary>
@@ -310,14 +307,14 @@ namespace LuaFramework {
 		/// <returns></returns>
 		public static int CheckRuntimeFile () {
 			if (!Application.isEditor) return 0;
-			string streamDir = Application.dataPath + "/StreamingAssets/";
+			string streamDir = Application.dataPath + "/" + AppConst.AssetDir;
 			if (!Directory.Exists (streamDir)) {
 				return -1;
 			} else {
 				string[] files = Directory.GetFiles (streamDir);
 				if (files.Length == 0) return -1;
 
-				if (!File.Exists (streamDir + "files.txt")) {
+				if (!File.Exists (streamDir + "/files.txt")) {
 					return -1;
 				}
 			}
@@ -369,13 +366,13 @@ namespace LuaFramework {
 				Debug.Log (item);
 			}
 		}
-		public static void ShowListss (Dictionary<string,string> ss) {
+		public static void ShowListss (Dictionary<string, string> ss) {
 			foreach (var item in ss) {
 				Debug.Log (item);
 			}
 		}
 		public static object Dic () {
-			Dictionary<string,string> ss = new Dictionary<string, string>();
+			Dictionary<string, string> ss = new Dictionary<string, string> ();
 			return ss;
 		}
 	}

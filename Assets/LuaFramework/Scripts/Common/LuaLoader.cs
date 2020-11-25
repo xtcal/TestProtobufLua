@@ -21,7 +21,7 @@ namespace LuaFramework {
         // Use this for initialization
         public LuaLoader() {
             instance = this;
-            beZip = !AppConst.DebugMode;//AppConst.LuaBundleMode;
+            beZip = !AppConst.DebugMode;
         }
 
         /// <summary>
@@ -30,10 +30,9 @@ namespace LuaFramework {
         /// <param name="bundle"></param>
         public void AddBundle(string bundleName) {
             string url = Util.DataPath + bundleName.ToLower();
+			Debugger.Log("AddBundle url:"+url);
             if (File.Exists(url)) {
                 var bytes = File.ReadAllBytes(url);
-				// 已注释, CreateFromMemoryImmediate从5.3开始改为LoadFromMemory,需要用的请自行取消注释~
-				// AssetBundle bundle = AssetBundle.CreateFromMemoryImmediate(bytes);
                 AssetBundle bundle = AssetBundle.LoadFromMemory(bytes);
                 if (bundle != null)
                 {

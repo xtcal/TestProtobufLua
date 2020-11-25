@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 3361518689
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4d463ba175f0431270461d45e8bee225
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/lua2txt/testpbc/MsgData_pb.lua.bytes
+- Assets/lua2txt/testpbc/lua/protoBase_pb.lua.bytes
+- Assets/lua2txt/testpbc/allPb.lua.bytes
+- Assets/lua2txt/testpbc/lua/protoLoginUser_pb.lua.bytes
+Dependencies: []

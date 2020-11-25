@@ -1,5 +1,5 @@
-require "Common/tools"
-require "Common/define"
+require "common/tools"
+require "common/define"
 
 --管理器--
 Game = {}

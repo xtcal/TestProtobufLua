@@ -2,8 +2,8 @@ Event = require "events"
 local cJson = require "cjson"
 local luabit = require "bit"
 
-require "Common/TimeTick"
-require "Common/UiClickHelper"
+require "common/TimeTick"
+require "common/UiClickHelper"
 
 --Json字符串 转 table对象
 function CJson_ToObject(jsonStr)
@@ -1130,4 +1130,13 @@ function this.RemoveEventListener(event_tb)
 			v[3] = false
 		end
 	end
+end
+
+function this.isWindows( ... )
+	
+	if Application.platform == UnityEngine.RuntimePlatform.WindowsEditor or
+	Application.platform ==  UnityEngine.RuntimePlatform.WindowsPlayer then
+		return true
+	end
+	return false
 end

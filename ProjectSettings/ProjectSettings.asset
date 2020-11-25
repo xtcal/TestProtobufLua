@@ -6,7 +6,7 @@ PlayerSettings:
   serializedVersion: 11
   productGUID: 7a300422526be2141b3bc526ddfb121b
   AndroidProfiler: 0
-  defaultScreenOrientation: 0
+  defaultScreenOrientation: 3
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
@@ -137,7 +137,7 @@ PlayerSettings:
   protectGraphicsMemory: 0
   useHDRDisplay: 0
   applicationIdentifier:
-    Android: com.junfine.luaframework
+    Android: com.a.luaframework
     Standalone: unity.DefaultCompany.LuaFramework_UGUI
     Tizen: com.junfine.luaframework
     iOS: com.junfine.luaframework

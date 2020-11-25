@@ -23,51 +23,62 @@ namespace LuaFramework {
 		/// </summary>
 		void Init () {
 			DontDestroyOnLoad (gameObject); //防止销毁自己
+			Screen.sleepTimeout = SleepTimeout.NeverSleep;
+			Application.targetFrameRate = AppConst.GameFrameRate; //锁帧
+
+			Debugger.Log ("Application.persistentDataPath==" + Application.persistentDataPath);
+			Debugger.Log ("Util.GetRelativePath()==" + Util.GetRelativePath ());
+			Debugger.Log ("Util.DataPath==" + Util.DataPath);
 
 			CheckExtractResource (); //释放资源
-			Screen.sleepTimeout = SleepTimeout.NeverSleep;
-			Application.targetFrameRate = AppConst.GameFrameRate;
 		}
 
 		/// <summary>
 		/// 释放资源
 		/// </summary>
 		public void CheckExtractResource () {
+			if (AppConst.DebugMode) {
+				StartCoroutine (OnUpdateResource ());
+				return;
+			}
+
 			bool isExists = Directory.Exists (Util.DataPath) &&
 				Directory.Exists (Util.DataPath + "lua/") &&
 				File.Exists (Util.DataPath + "files.txt");
-			if (isExists || AppConst.DebugMode) {
+			if (isExists) {
 				StartCoroutine (OnUpdateResource ());
 				return; //文件已经解压过了，自己可添加检查文件列表逻辑
+			} else {
+				StartCoroutine (OnExtractResource ()); //启动释放协成 
 			}
-			StartCoroutine (OnExtractResource ()); //启动释放协成 
 		}
 
 		IEnumerator OnExtractResource () {
 			string dataPath = Util.DataPath; //数据目录
-			string resPath = Util.AppContentPath (); //游戏包资源目录
+			string resPath = Util.AppContentPath () + "game"; //游戏包资源目录
 
 			if (Directory.Exists (dataPath)) Directory.Delete (dataPath, true);
 			Directory.CreateDirectory (dataPath);
 
-			string infile = resPath + "files.txt";
+			string infile = resPath + "/files.txt";
 			string outfile = dataPath + "files.txt";
 			if (File.Exists (outfile)) File.Delete (outfile);
 
 			string message = "正在解包文件:>files.txt";
 			Debug.Log (infile);
 			Debug.Log (outfile);
-			if (Application.platform == RuntimePlatform.Android) {
-				WWW www = new WWW (infile);
-				yield return www;
-
-				if (www.isDone) {
-					File.WriteAllBytes (outfile, www.bytes);
-				}
-				yield return 0;
-			} else File.Copy (infile, outfile, true);
+#if UNITY_ANDROID
+			WWW www = new WWW (infile);
+			yield return www;
+			if (www.isDone) {
+				File.WriteAllBytes (outfile, www.bytes);
+			}
+			www.Dispose ();
+			yield return 0;
+#else
+			File.Copy (infile, outfile, true);
 			yield return new WaitForEndOfFrame ();
-
+#endif
 			//释放所有文件到数据目录
 			string[] files = File.ReadAllLines (outfile);
 			foreach (var file in files) {
@@ -76,26 +87,24 @@ namespace LuaFramework {
 				outfile = dataPath + fs[0];
 
 				message = "正在解包文件:>" + fs[0];
-				Debug.Log ("正在解包文件:>" + infile);
+				Debug.Log ("正在解包文件:infile>" + infile + ",outfile>" + outfile);
 				facade.SendMessageCommand (NotiConst.UPDATE_MESSAGE, message);
 
 				string dir = Path.GetDirectoryName (outfile);
 				if (!Directory.Exists (dir)) Directory.CreateDirectory (dir);
-
-				if (Application.platform == RuntimePlatform.Android) {
-					WWW www = new WWW (infile);
-					yield return www;
-
-					if (www.isDone) {
-						File.WriteAllBytes (outfile, www.bytes);
-					}
-					yield return 0;
-				} else {
-					if (File.Exists (outfile)) {
-						File.Delete (outfile);
-					}
-					File.Copy (infile, outfile, true);
+#if UNITY_ANDROID
+				WWW _www = new WWW (infile);
+				yield return _www;
+				if (_www.isDone) {
+					File.WriteAllBytes (outfile, _www.bytes);
 				}
+				_www.Dispose ();
+#else
+				if (File.Exists (outfile)) {
+					File.Delete (outfile);
+				}
+				File.Copy (infile, outfile, true);
+#endif
 				yield return new WaitForEndOfFrame ();
 			}
 			message = "解包完成!!!";
@@ -156,14 +165,19 @@ namespace LuaFramework {
 					Debug.Log (fileUrl);
 					message = "downloading>>" + fileUrl;
 					facade.SendMessageCommand (NotiConst.UPDATE_MESSAGE, message);
+
+					
 					/*
-					www = new WWW(fileUrl); yield return www;
+					www = new WWW(fileUrl); 
+					yield return www;
 					if (www.error != null) {
 					    OnUpdateFailed(path);   //
 					    yield break;
 					}
 					File.WriteAllBytes(localfile, www.bytes);
 					 */
+
+
 					//这里都是资源文件，用线程下载
 					BeginDownload (fileUrl, localfile);
 					while (!(IsDownOK (localfile))) { yield return new WaitForEndOfFrame (); }
@@ -220,21 +234,16 @@ namespace LuaFramework {
 		/// 资源初始化结束
 		/// </summary>
 		public void OnResourceInited () {
-#if ASYNC_MODE
-			ResManager.Initialize (AppConst.AssetDir, delegate () {
+			ResManager.Initialize ("game", delegate () {
 				Debugger.Log ("Initialize OK!!!");
 				this.OnInitialize ();
 			});
-#else
-			ResManager.Initialize ();
-			this.OnInitialize ();
-#endif
 		}
 
 		void OnInitialize () {
 			LuaManager.InitStart ();
-			LuaManager.DoFile ("Logic/Game"); //加载游戏
-			LuaManager.DoFile ("Logic/Network"); //加载网络
+			LuaManager.DoFile ("logic/Game"); //加载游戏
+			LuaManager.DoFile ("logic/Network"); //加载网络
 			NetManager.OnInit (); //初始化网络
 			Util.CallMethod ("Game", "OnInitOK"); //初始化完成
 

@@ -5,37 +5,56 @@ using UnityEngine;
 
 namespace LuaFramework {
 	public class AppConst {
-
-		public const bool DebugMode = true; //调试模式-用于内部测试
-
 		/// <summary>
-		/// 如果想删掉框架自带的例子，那这个例子模式必须要
-		/// 关闭，否则会出现一些错误。
+		/// 调试模式-用于内部测试
 		/// </summary>
-		public const bool ExampleMode = true; //例子模式 
-
+		public const bool DebugMode = false;
 		/// <summary>
+		/// 更新模式-默认关闭 
 		/// 如果开启更新模式，前提必须启动框架自带服务器端。
 		/// 否则就需要自己将StreamingAssets里面的所有内容
 		/// 复制到自己的Webserver上面，并修改下面的WebUrl。
 		/// </summary>
-		public const bool UpdateMode = false; //更新模式-默认关闭 
-		public const bool LuaBundleMode = true; //Lua代码AssetBundle模式
-
+		public const bool UpdateMode = false;
 		public const int TimerInterval = 1;
-		public const int GameFrameRate = 30; //游戏帧频
-
-		public const string AppName = "LuaFramework"; //应用程序名称
-		public const string LuaTempDir = "lua2txt/"; //临时目录
-		public const string AppPrefix = AppName + "_"; //应用程序前缀
-		public const string ExtName = ".unity3d"; //素材扩展名
-		public const string AssetDir = "StreamingAssets"; //素材目录 
-		public const string WebUrl = "http://localhost:6688/"; //测试更新地址
-
-		public static string UserId = string.Empty; //用户ID
-		public static int SocketPort = 0; //Socket服务器端口
-		public static string SocketAddress = string.Empty; //Socket服务器地址
-
+		/// <summary>
+		/// 游戏帧频
+		/// </summary>
+		public const int GameFrameRate = 30;
+		/// <summary>
+		/// 应用程序名称
+		/// </summary>
+		public const string AppName = "LuaFramework";
+		/// <summary>
+		/// 临时目录
+		/// </summary>
+		public const string LuaTempDir = "lua2txt/";
+		/// <summary>
+		/// 应用程序前缀
+		/// </summary>
+		public const string AppPrefix = AppName + "_";
+		/// <summary>
+		/// 素材扩展名
+		/// </summary>
+		public const string ExtName = ".unity3d";
+		/// <summary>
+		/// 素材目录
+		/// </summary>
+		public const string AssetDir = "StreamingAssets/game"; 
+		//测试更新地址
+		public const string WebUrl = "http://localhost:6688/";
+		/// <summary>
+		/// 用户ID
+		/// </summary>
+		public static string UserId = string.Empty;
+		/// <summary>
+		/// Socket服务器端口
+		/// </summary>
+		public static int SocketPort = 0;
+		/// <summary>
+		/// Socket服务器地址
+		/// </summary>
+		public static string SocketAddress = string.Empty;
 		public static string FrameworkRoot {
 			get {
 				return Application.dataPath + "/" + AppName;

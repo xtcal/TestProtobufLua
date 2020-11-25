@@ -40,7 +40,7 @@ public class UDPClient : MonoBehaviour {
 				ip = receivePoint.ToString (),
 					str = str
 			};
-			Debug.Log ("s-c:" + LitJson.JsonMapper.ToJson (data));
+			Debugger.Log ("s-c:" + LitJson.JsonMapper.ToJson (data));
 			ServerPoint = (IPEndPoint) receivePoint;
 		}
 	}
@@ -66,7 +66,7 @@ public class UDPClient : MonoBehaviour {
 			ip = ip.ToString (),
 				str = str
 		};
-		Debug.Log ("c-s:" + LitJson.JsonMapper.ToJson (_data));
+		Debugger.Log ("c-s:" + LitJson.JsonMapper.ToJson (_data));
 	}
 	public static void SendMsg (string name, byte[] data, EndPoint ip = null) {
 		if (ip == null)
@@ -77,7 +77,7 @@ public class UDPClient : MonoBehaviour {
 
 	public static void SendMsg (byte[] data, EndPoint ip = null) {
 		var cs = DeSerialize<protoLoginUser.CS_LoginUser> (data);
-		Debug.Log ("C# SendMsg data :"+LitJson.JsonMapper.ToJson (data));
+		Debugger.Log ("C# SendMsg data :"+LitJson.JsonMapper.ToJson (data));
 	}
 	public static string GetData () {
 		var user = new protoLoginUser.CS_LoginUser ();
@@ -99,7 +99,7 @@ public class UDPClient : MonoBehaviour {
 	}
 
 	public static void ShowData (byte[] data) {
-		Debug.Log ("ShowData data :"+LitJson.JsonMapper.ToJson (data));
+		Debugger.Log ("ShowData data :"+LitJson.JsonMapper.ToJson (data));
 	}
 
 	public static void GetRoomList () {
@@ -116,7 +116,7 @@ public class UDPClient : MonoBehaviour {
 				//使用ProtoBuf工具的序列化方法
 				ProtoBuf.Serializer.Serialize<T> (ms, model);
 				//定义二级制数组，保存序列化后的结果
-				Debug.Log ("Serialize data ms.Length :" + ms.Length);
+				Debugger.Log ("Serialize data ms.Length :" + ms.Length);
 				byte[] result = new byte[ms.Length];
 				//将流的位置设为0，起始点
 				ms.Position = 0;
@@ -125,7 +125,7 @@ public class UDPClient : MonoBehaviour {
 				return result;
 			}
 		} catch (Exception ex) {
-			Debug.Log ("序列化失败: " + ex.ToString ());
+			Debugger.Log ("序列化失败: " + ex.ToString ());
 			return null;
 		}
 	}
@@ -145,7 +145,7 @@ public class UDPClient : MonoBehaviour {
 				return result;
 			}
 		} catch (Exception ex) {
-			Debug.Log ("反序列化失败: " + ex.ToString ());
+			Debugger.Log ("反序列化失败: " + ex.ToString ());
 			return default (T);
 		}
 	}

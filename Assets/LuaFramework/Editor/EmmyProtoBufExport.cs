@@ -243,7 +243,7 @@ public class EmmyProtoBufExport {
 
 					// Debug.Log ("one line temp=" + temp);
 
-					if (isEnum && temp.Equals ("}")) {	//到语句块结尾了
+					if (isEnum && temp.Equals ("}")) { //到语句块结尾了
 						sb.AppendLine ("\t},");
 						continue;
 					}
@@ -310,12 +310,13 @@ public class EmmyProtoBufExport {
 			File.WriteAllText (dirUrl + "/lua/" + Path.GetFileNameWithoutExtension (path) + "_pb.lua", sb.ToString ());
 		}
 
-		// sb = new StringBuilder ();
-		// sb.AppendLine("---自动生成,方便表索引");
-		// foreach (var item in strs) {
-		// 	sb.AppendLine ("MsgData[\"" + item + "\"] = MsgData." + item);
-		// }
-		// File.WriteAllText (dirUrl + "/MsgData_tab.lua", sb.ToString ());
+		sb = new StringBuilder ();
+		sb.AppendLine ("return {");
+		foreach (var item in files) {
+			sb.AppendLine ("\t\"" + Path.GetFileNameWithoutExtension (item) + "\",");
+		}
+		sb.AppendLine ("}");
+		File.WriteAllText (dirUrl + "/allPb.lua", sb.ToString ());
 	}
 	public static void ExportApi (string inPath, string outPath, string name) {
 		string proBufStr = File.ReadAllText (inPath, Encoding.UTF8);

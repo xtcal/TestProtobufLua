@@ -817,14 +817,12 @@ public static class ToLuaMenu {
 		AssetDatabase.Refresh ();
 	}
 
-	public static void CopyLuaBytesFiles (string sourceDir, string destDir, bool appendext = true, string searchPattern = "*.lua", SearchOption option = SearchOption.AllDirectories, string[] files = null) {
+	public static void CopyLuaBytesFiles (string sourceDir, string destDir, bool appendext = true, string searchPattern = "*.lua", SearchOption option = SearchOption.AllDirectories) {
 		if (!Directory.Exists (sourceDir)) {
 			return;
 		}
 
-		if (files == null) {
-			files = Directory.GetFiles (sourceDir, searchPattern, option);
-		}
+		var files = Directory.GetFiles (sourceDir, searchPattern, option).Where (s => s.EndsWith (".lua") || s.EndsWith (".proto")).ToArray ();;
 		int len = sourceDir.Length;
 
 		if (sourceDir[len - 1] == '/' || sourceDir[len - 1] == '\\') {

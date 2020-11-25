@@ -30,11 +30,16 @@ public class Packager {
 		BuildAssetResource (BuildTarget.StandaloneWindows64);
 	}
 #endif
+	[MenuItem ("LuaFramework/Test", false, 100)]
+	public static void BuildWindowsResource1111 () {
+		// Debug.Log(AppDataPath);
+	}
 
 	/// <summary>
 	/// 生成绑定素材
 	/// </summary>
 	public static void BuildAssetResource (BuildTarget target) {
+
 		if (Directory.Exists (Util.DataPath)) {
 			Directory.Delete (Util.DataPath, true);
 		}
@@ -46,15 +51,20 @@ public class Packager {
 		AssetDatabase.Refresh ();
 
 		maps.Clear ();
-		if (AppConst.LuaBundleMode) {
-			HandleLuaBundle ();
-		} else {
-			HandleLuaFile ();
+
+		HandleLuaBundle ();
+		HandleExampleBundle ();
+
+		string path = Application.dataPath + "/ab/files";
+		foreach (var file in Directory.GetFiles (path, "*.*", SearchOption.AllDirectories)) {
+			var newFile = file.Replace ("/ab/", "/StreamingAssets/game/");
+			var dir = Path.GetDirectoryName (newFile);
+			if (!Directory.Exists (dir)) {
+				Directory.CreateDirectory (dir);
+			}
+			File.Copy (file, newFile);
 		}
-		return;
-		if (AppConst.ExampleMode) {
-			HandleExampleBundle ();
-		}
+
 		string resPath = "Assets/" + AppConst.AssetDir;
 		foreach (var item in maps) {
 			UnityEngine.Debug.Log (LitJson.JsonMapper.ToJson (item));
@@ -62,8 +72,8 @@ public class Packager {
 		BuildPipeline.BuildAssetBundles (resPath, maps.ToArray (), BuildAssetBundleOptions.None, target);
 		BuildFileIndex ();
 
-		string streamDir = Application.dataPath + "/" + AppConst.LuaTempDir;
-		if (Directory.Exists (streamDir)) Directory.Delete (streamDir, true);
+		// string streamDir = Application.dataPath + "/" + AppConst.LuaTempDir;
+		// if (Directory.Exists (streamDir)) Directory.Delete (streamDir, true);
 		AssetDatabase.Refresh ();
 	}
 
@@ -85,71 +95,56 @@ public class Packager {
 	/// </summary>
 	static void HandleLuaBundle () {
 		string streamDir = Application.dataPath + "/" + AppConst.LuaTempDir;
+		if (Directory.Exists (streamDir)) Directory.Delete (streamDir, true);
 		if (!Directory.Exists (streamDir)) Directory.CreateDirectory (streamDir);
 
-		ToLuaMenu.CopyLuaBytesFiles (LuaConst.toluaDir, Path.Combine (streamDir, "tolua"));
+		var alldir = Directory.GetDirectories (LuaConst.luaDir, "*.*", SearchOption.TopDirectoryOnly).ToList ();
+		alldir.ForEach (s => s.Replace ("\\", "/"));
+		var moduleDic = new Dictionary<string, string> ();
+		foreach (var dir in alldir) {
+			var dirName = Path.GetFileName (dir);
+			if (!moduleDic.ContainsKey (dirName)) {
+				moduleDic.Add (dirName, dir);
+			} else {
+				Debug.LogError ("error! dic.ContainsKey(dirName) dirName:" + dirName + ",dir:" + dir);
+			}
+		}
+		moduleDic.Add ("tolua", LuaConst.toluaDir);
+		Debug.Log (LitJson.JsonMapper.ToJson (moduleDic));
 
-		{
-			var _dirs = Directory.GetDirectories (LuaConst.luaDir);
-			foreach (var dir in _dirs) {
-				var dirName = Path.GetFileName (dir);
-				var newDir = Path.Combine (streamDir, dirName);
+		foreach (var item in moduleDic) {
+			var newTempDir = Path.Combine (streamDir, item.Key.ToLower ());
+			if (!Directory.Exists (newTempDir)) {
+				Directory.CreateDirectory (newTempDir);
+			}
+			var files = Directory.GetFiles (item.Value, "*.*", SearchOption.AllDirectories);
+			foreach (var file in files) {
+				var newFilePath = file.Replace (item.Value, newTempDir);
+				if (File.Exists (newFilePath)) {
+					continue;
+				}
+				var oldDir = Path.GetDirectoryName (file);
+				var newDir = oldDir.Replace (item.Value, newTempDir);
 				if (!Directory.Exists (newDir)) {
 					Directory.CreateDirectory (newDir);
 				}
-
-				var files = Directory.GetFiles (dir, "*.*", SearchOption.AllDirectories).Where (s => s.EndsWith (".lua") || s.EndsWith (".proto")).ToArray ();
-				ToLuaMenu.CopyLuaBytesFiles (dir, newDir, true, "", SearchOption.AllDirectories, files);
+				var ext = Path.GetExtension (newFilePath).ToLower ();
+				if (ext.Equals (".lua") || ext.Equals (".proto")) {
+					newFilePath += ".bytes";
+				}
+				if (!ext.Equals (".meta")) {
+					File.Copy (file, newFilePath);
+				}
 			}
-		}
 
-		// string[] srcDirs = {
-		// 	LuaConst.luaDir,
-		// 	LuaConst.toluaDir,
-		// };
-		// for (int i = 0; i < srcDirs.Length; i++) {
-		// 	var dir = srcDirs[i];
-		// 	var dirName = Path.GetFileName (dir);
-		// 	var newDir = Path.Combine (streamDir, dirName);
-		// 	Debug.Log ("newDir" + newDir);
-		// 	Debug.Log ("dir" + dir);
-		// 	Debug.Log ("dirName" + dirName);
-		// 	if (!Directory.Exists (newDir)) {
-		// 		Directory.CreateDirectory (newDir);
-		// 	}
-		// 	ToLuaMenu.CopyLuaBytesFiles (srcDirs[i], newDir);
-		// }
-		AssetDatabase.Refresh ();
-		return;
-		string[] dirs = Directory.GetDirectories (streamDir, "*", SearchOption.AllDirectories);
-		for (int i = 0; i < dirs.Length; i++) {
-			string name = dirs[i].Replace (streamDir, string.Empty);
-			name = name.Replace ('\\', '_').Replace ('/', '_');
-			name = "lua/lua_" + name.ToLower () + AppConst.ExtName;
-
-			string path = "Assets" + dirs[i].Replace (Application.dataPath, "");
+			var name = "lua/" + item.Key.ToLower () + AppConst.ExtName;
+			var path = newTempDir.Replace (Application.dataPath, "Assets");
 			AddBuildMap (name, "*.bytes", path);
 		}
-		AddBuildMap ("lua/lua" + AppConst.ExtName, "*.bytes", "Assets/" + AppConst.LuaTempDir);
 
-		//-------------------------------处理非Lua文件----------------------------------
-		// string luaPath = AppDataPath + "/StreamingAssets/lua/";
-		// for (int i = 0; i < srcDirs.Length; i++) {
-		// 	paths.Clear ();
-		// 	files.Clear ();
-		// 	string luaDataPath = srcDirs[i].ToLower ();
-		// 	Recursive (luaDataPath);
-		// 	foreach (string f in files) {
-		// 		if (f.EndsWith (".meta") || f.EndsWith (".lua")) continue;
-		// 		string newfile = f.Replace (luaDataPath, "");
-		// 		string path = Path.GetDirectoryName (luaPath + newfile);
-		// 		if (!Directory.Exists (path)) Directory.CreateDirectory (path);
+		Debug.Log (LitJson.JsonMapper.ToJson (maps));
 
-		// 		string destfile = path + "/" + Path.GetFileName (f);
-		// 		File.Copy (f, destfile, true);
-		// 	}
-		// }
-		// AssetDatabase.Refresh ();
+		AssetDatabase.Refresh ();
 	}
 
 	/// <summary>
@@ -159,18 +154,15 @@ public class Packager {
 		string resPath = AppDataPath + "/" + AppConst.AssetDir + "/";
 		if (!Directory.Exists (resPath)) Directory.CreateDirectory (resPath);
 
-		AddBuildMap ("img" + AppConst.ExtName, "*.*", "Assets/ab/res/img");
-		AddBuildMap ("prefab" + AppConst.ExtName, "*.*", "Assets/ab/res/prefab");
-		// AddBuildMap ("message" + AppConst.ExtName, "*.prefab", "Assets/LuaFramework/Examples/Builds/Message");
-		// AddBuildMap ("prompt_asset" + AppConst.ExtName, "*.png", "Assets/LuaFramework/Examples/Textures/Prompt");
-		// AddBuildMap ("shared_asset" + AppConst.ExtName, "*.png", "Assets/LuaFramework/Examples/Textures/Shared");
+		AddBuildMap ("res/img" + AppConst.ExtName, "*.*", "Assets/ab/res/img");
+		AddBuildMap ("res/prefab" + AppConst.ExtName, "*.*", "Assets/ab/res/prefab");
 	}
 
 	/// <summary>
 	/// 处理Lua文件
 	/// </summary>
 	static void HandleLuaFile () {
-		string resPath = AppDataPath + "/StreamingAssets/";
+		string resPath = AppDataPath + "/" + AppConst.AssetDir;
 		string luaPath = resPath + "/lua/";
 
 		//----------复制Lua文件----------------
@@ -209,7 +201,7 @@ public class Packager {
 	}
 
 	static void BuildFileIndex () {
-		string resPath = AppDataPath + "/StreamingAssets/";
+		string resPath = AppDataPath + "/" + AppConst.AssetDir;
 		///----------------------创建文件列表-----------------------
 		string newFilePath = resPath + "/files.txt";
 		if (File.Exists (newFilePath)) File.Delete (newFilePath);
@@ -262,37 +254,37 @@ public class Packager {
 		EditorUtility.DisplayProgressBar (title, desc, value);
 	}
 
-	[MenuItem ("LuaFramework/Build Protobuf-lua-gen File")]
-	public static void BuildProtobufFile () {
-		if (!AppConst.ExampleMode) {
-			UnityEngine.Debug.LogError ("若使用编码Protobuf-lua-gen功能，需要自己配置外部环境！！");
-			return;
-		}
-		string dir = AppDataPath + "/Lua/3rd/pblua";
-		paths.Clear ();
-		files.Clear ();
-		Recursive (dir);
+	// [MenuItem ("LuaFramework/Build Protobuf-lua-gen File")]
+	// public static void BuildProtobufFile () {
+	// 	if (true) {
+	// 		UnityEngine.Debug.LogError ("若使用编码Protobuf-lua-gen功能，需要自己配置外部环境！！");
+	// 		return;
+	// 	}
+	// 	string dir = AppDataPath + "/Lua/3rd/pblua";
+	// 	paths.Clear ();
+	// 	files.Clear ();
+	// 	Recursive (dir);
 
-		string protoc = "d:/protobuf-2.4.1/src/protoc.exe";
-		string protoc_gen_dir = "\"d:/protoc-gen-lua/plugin/protoc-gen-lua.bat\"";
+	// 	string protoc = "d:/protobuf-2.4.1/src/protoc.exe";
+	// 	string protoc_gen_dir = "\"d:/protoc-gen-lua/plugin/protoc-gen-lua.bat\"";
 
-		foreach (string f in files) {
-			string name = Path.GetFileName (f);
-			string ext = Path.GetExtension (f);
-			if (!ext.Equals (".proto")) continue;
+	// 	foreach (string f in files) {
+	// 		string name = Path.GetFileName (f);
+	// 		string ext = Path.GetExtension (f);
+	// 		if (!ext.Equals (".proto")) continue;
 
-			ProcessStartInfo info = new ProcessStartInfo ();
-			info.FileName = protoc;
-			info.Arguments = " --lua_out=./ --plugin=protoc-gen-lua=" + protoc_gen_dir + " " + name;
-			info.WindowStyle = ProcessWindowStyle.Hidden;
-			info.UseShellExecute = true;
-			info.WorkingDirectory = dir;
-			info.ErrorDialog = true;
-			Util.Log (info.FileName + " " + info.Arguments);
+	// 		ProcessStartInfo info = new ProcessStartInfo ();
+	// 		info.FileName = protoc;
+	// 		info.Arguments = " --lua_out=./ --plugin=protoc-gen-lua=" + protoc_gen_dir + " " + name;
+	// 		info.WindowStyle = ProcessWindowStyle.Hidden;
+	// 		info.UseShellExecute = true;
+	// 		info.WorkingDirectory = dir;
+	// 		info.ErrorDialog = true;
+	// 		Util.Log (info.FileName + " " + info.Arguments);
 
-			Process pro = Process.Start (info);
-			pro.WaitForExit ();
-		}
-		AssetDatabase.Refresh ();
-	}
+	// 		Process pro = Process.Start (info);
+	// 		pro.WaitForExit ();
+	// 	}
+	// 	AssetDatabase.Refresh ();
+	// }
 }
