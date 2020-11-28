@@ -23,7 +23,6 @@ public static class LuaConst {
 	/// </summary>
 	/// <returns></returns>
 	public static string luaResDir = string.Format ("{0}/{1}/Lua", Application.persistentDataPath, osDir);
-
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN    
 	public static string zbsDir = "D:/ZeroBraneStudio/lualibs/mobdebug"; //ZeroBraneStudio目录       
 #elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX

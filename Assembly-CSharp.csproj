@@ -229,6 +229,7 @@
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaBinder.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaComponentWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_AppConstWrap.cs" />
+     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_AppConst_LuaLoadModeWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_ByteBufferWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_GameManagerWrap.cs" />
      <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_LuaBehaviourWrap.cs" />
@@ -354,7 +355,6 @@
      <Compile Include="Assets\Unity-Logs-Viewer\Reporter\ReporterMessageReceiver.cs" />
      <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Test\Rotate.cs" />
      <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Test\TestReporter.cs" />
-     <None Include="Assets\StreamingAssets\build_info.txt" />
      <None Include="Assets\StreamingAssets\game\files.txt" />
      <None Include="Assets\Plugins\Protobuf\Core\Plugins\Google.ProtocolBuffers.xml" />
      <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\requires.txt" />
@@ -369,6 +369,7 @@
      <None Include="Assets\LuaFramework\ToLua\Injection\LuaInjectionSkipPaths.txt" />
      <None Include="Assets\LuaFramework\ToLua\Injection\InjectionBlackList.txt" />
      <None Include="Assets\Plugins\DOTween\DOTween43.xml" />
+     <None Include="Assets\StreamingAssets\build_info.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity5.6.4p1/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

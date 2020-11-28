@@ -60,7 +60,7 @@ end
 function log(...)
 	local a = { ... }
 	local str = Concat(a)
-	Util.Log(str)
+	print(str)
 end
 
 --警告日志--
@@ -201,11 +201,6 @@ local function _list_table(tb, table_list, level, isMetatable)
 end
 --将table转换为字符串显示
 function table_tostring(tb, isMetatable, table_list)
-	-- if not(GlobalData.PackageInfo.packagetype == 1 or GlobalData.PackageInfo.packagetype == 2) and --外网不开启
-	--    (Application.isMobilePlatform ==true)
-	-- then
-	-- 	   return "";
-	-- end
 	if type(tb) ~= "table" then
 		error("Sorry 1, it's not table, it is " .. type(tb) .. ".\n" .. debug.traceback())
 		return ""
@@ -615,6 +610,7 @@ function string.trim(s)
 	local ret = string.gsub(s, "^%s*(.-)%s*$", "%1")
 	return ret
 end
+
 
 --将字符串转为unicode的数组
 function string.utf2unicode(input)
@@ -1139,4 +1135,27 @@ function this.isWindows( ... )
 		return true
 	end
 	return false
+end
+
+function decodeURI(s)
+	s = string.gsub(s, '%%(%x%x)', function(h) return string.char(tonumber(h, 16)) end)
+	return s
+end
+function encodeURI(s)
+	s = string.gsub(s, "([^%w%.%-_ ])", function(c) return string.format("%%%02X", string.byte(c)) end)
+	return string.gsub(s, " ", "+")
+end
+
+function GetNumTransformation(_val)
+	local str = string.format("%0.2f", _val)
+	return tonumber(str)
+end
+
+function trycatch(tryFunc, catchFunc)
+	try {
+		tryFunc,
+		catch {
+			catchFunc
+		}
+	}
 end

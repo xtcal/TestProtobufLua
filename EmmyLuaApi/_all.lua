@@ -170,6 +170,7 @@ DG.Tweening.Core = {}
 DG.Tweening.Core.Surrogates = {}
 DG.Tweening.Core.Surrogates.ColorWrapper = {} ---@type ColorWrapper
 LuaProfiler = {} ---@type LuaProfiler
+LuaFramework.AppConst.LuaLoadMode = {} ---@type LuaLoadMode
 UIEventListener = {} ---@type UIEventListener
 TimeManager = {} ---@type TimeManager
 UDPClient = {} ---@type UDPClient

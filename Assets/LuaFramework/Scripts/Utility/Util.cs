@@ -226,11 +226,19 @@ namespace LuaFramework {
 			get {
 				if (Application.isMobilePlatform) {
 					return Application.persistentDataPath + "/" + AppConst.AssetDir + "/";
-				} else if (AppConst.DebugMode) {
+				}
+				if (Application.isEditor) {
+					if (AppConst.UpdateMode && AppConst.LoadLuaType == AppConst.LuaLoadMode.ToAb) {
+						int idx = Application.dataPath.LastIndexOf ('/');
+						return Application.dataPath.Substring (0, idx + 1) + AppConst.AssetDir + "/";
+					}
+				}
+				if (AppConst.DebugMode) {
 					return Application.dataPath + "/" + AppConst.AssetDir + "/";
-				} else if (Application.platform == RuntimePlatform.OSXEditor) {
-					int i = Application.dataPath.LastIndexOf ('/');
-					return Application.dataPath.Substring (0, i + 1) + AppConst.AssetDir + "/";
+				}
+				if (Application.platform == RuntimePlatform.OSXEditor) {
+					int idx = Application.dataPath.LastIndexOf ('/');
+					return Application.dataPath.Substring (0, idx + 1) + AppConst.AssetDir + "/";
 				}
 				return "c:/" + AppConst.AssetDir + "/";
 			}
@@ -273,20 +281,22 @@ namespace LuaFramework {
 		/// <summary>
 		/// 应用程序内容路径
 		/// </summary>
-		public static string AppContentPath () {
-			string path = string.Empty;
-			switch (Application.platform) {
-				case RuntimePlatform.Android:
-					path = "jar:file://" + Application.dataPath + "!/assets/";
-					break;
-				case RuntimePlatform.IPhonePlayer:
-					path = Application.dataPath + "/Raw/";
-					break;
-				default:
-					path = Application.dataPath + "/" + AppConst.AssetDir + "/";
-					break;
+		public static string AppContentPath {
+			get {
+				string path = string.Empty;
+				switch (Application.platform) {
+					case RuntimePlatform.Android:
+						path = "jar:file://" + Application.dataPath + "!/assets/game/";
+						break;
+					case RuntimePlatform.IPhonePlayer:
+						path = Application.dataPath + "/Raw/";
+						break;
+					default:
+						path = Application.dataPath + "/" + AppConst.AssetDir + "/";
+						break;
+				}
+				return path;
 			}
-			return path;
 		}
 
 		public static void Log (string str) {
@@ -349,11 +359,6 @@ namespace LuaFramework {
 				return false;
 			} else if (resultId == -2) {
 				Debug.LogError ("没有找到Wrap脚本缓存，单击Lua菜单下Gen Lua Wrap Files生成脚本！！");
-				EditorApplication.isPlaying = false;
-				return false;
-			}
-			if (Application.loadedLevelName == "Test" && !AppConst.DebugMode) {
-				Debug.LogError ("测试场景，必须打开调试模式，AppConst.DebugMode = true！！");
 				EditorApplication.isPlaying = false;
 				return false;
 			}

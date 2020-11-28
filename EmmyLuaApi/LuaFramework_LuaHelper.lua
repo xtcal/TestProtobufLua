@@ -17,6 +17,9 @@ function LuaHelper.GetNetManager() end
 ---@return SoundManager
 function LuaHelper.GetSoundManager() end
 ---@public
+---@return LuaManager
+function LuaHelper.GetLuaManager() end
+---@public
 ---@param data LuaByteBuffer
 ---@param func LuaFunction
 ---@return void

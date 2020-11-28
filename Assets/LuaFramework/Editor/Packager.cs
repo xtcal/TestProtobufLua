@@ -1,15 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+
 using System.IO;
 using System.Linq;
 using System.Text;
 using LuaFramework;
+using LuaInterface;
 using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 public class Packager {
+    [MenuItem("Tools/PlayerPrefs.DeleteAll %k")]
+    private static void NewMenuOption()
+    {
+        PlayerPrefs.DeleteAll();
+        Debugger.Log("PlayerPrefs.DeleteAll");
+    }
 	static List<string> paths = new List<string> ();
 	static List<string> files = new List<string> ();
 	static List<AssetBundleBuild> maps = new List<AssetBundleBuild> ();
@@ -30,10 +37,10 @@ public class Packager {
 		BuildAssetResource (BuildTarget.StandaloneWindows64);
 	}
 #endif
-	[MenuItem ("LuaFramework/Test", false, 100)]
-	public static void BuildWindowsResource1111 () {
-		// Debug.Log(AppDataPath);
-	}
+	// [MenuItem ("LuaFramework/Test", false, 100)]
+	// public static void BuildWindowsResource1111 () {
+	// 	// Debug.Log(AppDataPath);
+	// }
 
 	/// <summary>
 	/// 生成绑定素材
@@ -66,14 +73,43 @@ public class Packager {
 		}
 
 		string resPath = "Assets/" + AppConst.AssetDir;
-		foreach (var item in maps) {
-			UnityEngine.Debug.Log (LitJson.JsonMapper.ToJson (item));
-		}
 		BuildPipeline.BuildAssetBundles (resPath, maps.ToArray (), BuildAssetBundleOptions.None, target);
 		BuildFileIndex ();
 
 		// string streamDir = Application.dataPath + "/" + AppConst.LuaTempDir;
 		// if (Directory.Exists (streamDir)) Directory.Delete (streamDir, true);
+		// AssetDatabase.Refresh ();
+
+		var versFile = "./vers.json";
+		Dictionary<string, int> dics = new Dictionary<string, int> ();
+		if (File.Exists (versFile)) {
+			var str = File.ReadAllText (versFile);
+			// Debug.Log("str="+str);
+			dics = LitJson.JsonMapper.ToObject<Dictionary<string, int>> (str);
+		}
+		foreach (var item in maps) {
+			var key = item.assetBundleName;
+			if (!dics.ContainsKey (key)) {
+				dics.Add (key, 1);
+			} else {
+				dics[key] = dics[key] + 1;
+			}
+		}
+		// Debug.Log("ret="+ LitJson.JsonMapper.ToJson (dics));
+		File.WriteAllText (versFile, LitJson.JsonMapper.ToJson (dics));
+		// AssetDatabase.Refresh ();
+		AssetDatabase.Refresh ();
+		string vers = "./vers/";
+		foreach (var item in maps) {
+			var key = item.assetBundleName;
+			var url = vers + dics[key] + "/" + key;
+			var dir = Path.GetDirectoryName (url);
+			if (!Directory.Exists (dir)) {
+				Directory.CreateDirectory (dir);
+			}
+			File.Copy (Application.dataPath + "/" + AppConst.AssetDir + "/" + key, url);
+		}
+
 		AssetDatabase.Refresh ();
 	}
 

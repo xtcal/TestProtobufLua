@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.IO;
 using LuaInterface;
 using UnityEngine;
 
@@ -72,7 +74,7 @@ namespace LuaFramework {
 		/// 初始化Lua代码加载路径
 		/// </summary>
 		void InitLuaPath () {
-			if (AppConst.DebugMode) {
+			if (AppConst.DebugMode && Application.isEditor) {
 				string rootPath = AppConst.FrameworkRoot;
 				lua.AddSearchPath (rootPath + "/Lua");
 				lua.AddSearchPath (rootPath + "/ToLua/Lua");
@@ -85,18 +87,18 @@ namespace LuaFramework {
 		/// 初始化LuaBundle
 		/// </summary>
 		void InitLuaBundle () {
-			if (loader.beZip) {
-				loader.AddBundle ("lua/tolua.unity3d");
+			if (AppConst.LoadLuaType == AppConst.LuaLoadMode.ToAb) {
+				// AddSearchBundle ("lua/tolua.unity3d");
 				// loader.AddBundle ("lua/lua.unity3d");
 				// loader.AddBundle ("lua/lua_math.unity3d");
 				// loader.AddBundle ("lua/lua_system.unity3d");
 				// loader.AddBundle ("lua/lua_system_reflection.unity3d");
 				// loader.AddBundle ("lua/lua_unityengine.unity3d");
 
-				loader.AddBundle ("lua/common.unity3d");
-				loader.AddBundle ("lua/logic.unity3d");
-				loader.AddBundle ("lua/testpbc.unity3d");
-				loader.AddBundle ("lua/testprotobuf.unity3d");
+				// loader.AddBundle ("lua/common.unity3d");
+				// loader.AddBundle ("lua/logic.unity3d");
+				// loader.AddBundle ("lua/testpbc.unity3d");
+				// loader.AddBundle ("lua/testprotobuf.unity3d");
 
 				// loader.AddBundle ("lua/lua_view.unity3d");
 				// loader.AddBundle ("lua/lua_controller.unity3d");
@@ -128,12 +130,45 @@ namespace LuaFramework {
 		}
 
 		public void Close () {
-			loop.Destroy ();
-			loop = null;
+			if (loop != null) {
+				loop.Destroy ();
+				loop = null;
+			}
 
-			lua.Dispose ();
-			lua = null;
+			if (lua != null) {
+				lua.Dispose ();
+				lua = null;
+			}
 			loader = null;
+		}
+		public void EnterGame () {
+			AddSearchBundle ("lua/main");
+		}
+		public void AddSearchBundle (string url) {
+			if (!url.EndsWith (AppConst.ExtName)) {
+				url += AppConst.ExtName;
+			}
+			url = Util.DataPath + url;
+			try {
+				var bytes = File.ReadAllBytes (url);
+				AssetBundle bundle = AssetBundle.LoadFromMemory (bytes);
+				loader.AddSearchBundle (Path.GetFileNameWithoutExtension (url).ToLower (), bundle);
+			} catch (System.Exception ex) {
+				Debugger.LogError ("AddSearchBundle find err {0} {1}", url, ex.Message);
+			}
+		}
+ 
+		public void AddSearchBundle (string name, AssetBundle bundle) {
+			loader.AddSearchBundle (name, bundle);
+		}
+		public void AddSearchBundle (string name, byte[] bytes) {
+			AssetBundle bundle = AssetBundle.LoadFromMemory (bytes);
+			if (bundle != null) {
+				loader.AddSearchBundle (name, bundle);
+			}
+		}
+		public void UnloadModule (string bundleName) {
+			loader.UnloadModule (bundleName);
 		}
 	}
 }

@@ -26,11 +26,48 @@ namespace LuaFramework {
 			Screen.sleepTimeout = SleepTimeout.NeverSleep;
 			Application.targetFrameRate = AppConst.GameFrameRate; //锁帧
 
-			Debugger.Log ("Application.persistentDataPath==" + Application.persistentDataPath);
-			Debugger.Log ("Util.GetRelativePath()==" + Util.GetRelativePath ());
-			Debugger.Log ("Util.DataPath==" + Util.DataPath);
-
+			StartCoroutine (StartGame ());
+			return;
 			CheckExtractResource (); //释放资源
+		}
+
+		public IEnumerator StartGame () {
+			var abs = new List<string> () {
+				"lua/tolua.unity3d",
+				"lua/common.unity3d",
+				"lua/main.unity3d",
+			};
+			foreach (var item in abs) {
+				var mainFile = Util.DataPath + item;
+				Debugger.LogWarning ("check file:" + mainFile);
+				byte[] bytes = null;
+				if (!File.Exists (mainFile)) {
+					var url = Util.AppContentPath + item;
+					Debugger.LogWarning ("download fileurl:" + url);
+#if UNITY_ANDROID && !UNITY_EDITOR
+					WWW www = new WWW (url);
+					yield return www;
+					bytes = www.bytes;
+					www.Dispose ();
+#else
+					bytes = File.ReadAllBytes (url);
+#endif
+					var dir = Path.GetDirectoryName (Util.DataPath + item);
+					if (!Directory.Exists (dir)) {
+						Directory.CreateDirectory (dir);
+						File.WriteAllBytes (Util.DataPath + item, bytes);
+					}
+				} else {
+					bytes = File.ReadAllBytes (mainFile);
+				}
+				yield return new WaitForEndOfFrame ();
+				var name = Path.GetFileNameWithoutExtension (item).ToLower ();
+				LuaManager.AddSearchBundle (name, bytes);
+				yield return new WaitForEndOfFrame ();
+			}
+			LuaManager.InitStart ();
+			LuaManager.DoFile ("main/main"); //加载游戏
+			Util.CallMethod ("main", "Init"); //初始化完成
 		}
 
 		/// <summary>
@@ -55,19 +92,19 @@ namespace LuaFramework {
 
 		IEnumerator OnExtractResource () {
 			string dataPath = Util.DataPath; //数据目录
-			string resPath = Util.AppContentPath () + "game"; //游戏包资源目录
+			string resPath = Util.AppContentPath; //游戏包资源目录
 
 			if (Directory.Exists (dataPath)) Directory.Delete (dataPath, true);
 			Directory.CreateDirectory (dataPath);
 
-			string infile = resPath + "/files.txt";
+			string infile = resPath + "files.txt";
 			string outfile = dataPath + "files.txt";
 			if (File.Exists (outfile)) File.Delete (outfile);
 
 			string message = "正在解包文件:>files.txt";
-			Debug.Log (infile);
-			Debug.Log (outfile);
-#if UNITY_ANDROID
+			Debugger.LogWarning ("infile=" + infile);
+			Debugger.LogWarning ("outfile=" + outfile);
+#if UNITY_ANDROID && !UNITY_EDITOR
 			WWW www = new WWW (infile);
 			yield return www;
 			if (www.isDone) {
@@ -87,12 +124,12 @@ namespace LuaFramework {
 				outfile = dataPath + fs[0];
 
 				message = "正在解包文件:>" + fs[0];
-				Debug.Log ("正在解包文件:infile>" + infile + ",outfile>" + outfile);
+				Debugger.Log ("正在解包文件:infile>" + infile + ",outfile>" + outfile);
 				facade.SendMessageCommand (NotiConst.UPDATE_MESSAGE, message);
 
 				string dir = Path.GetDirectoryName (outfile);
 				if (!Directory.Exists (dir)) Directory.CreateDirectory (dir);
-#if UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
 				WWW _www = new WWW (infile);
 				yield return _www;
 				if (_www.isDone) {
@@ -166,7 +203,6 @@ namespace LuaFramework {
 					message = "downloading>>" + fileUrl;
 					facade.SendMessageCommand (NotiConst.UPDATE_MESSAGE, message);
 
-					
 					/*
 					www = new WWW(fileUrl); 
 					yield return www;
@@ -176,7 +212,6 @@ namespace LuaFramework {
 					}
 					File.WriteAllBytes(localfile, www.bytes);
 					 */
-
 
 					//这里都是资源文件，用线程下载
 					BeginDownload (fileUrl, localfile);

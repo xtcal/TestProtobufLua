@@ -1,6 +1,5 @@
 ﻿---@class LuaComponent : MonoBehaviour
 ---@field public components Dictionary
----@field public _keys List
 local LuaComponent = {}
 ---@public
 ---@param name string

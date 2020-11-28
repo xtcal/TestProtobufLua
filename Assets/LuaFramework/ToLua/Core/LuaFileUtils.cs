@@ -24,6 +24,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using LuaFramework;
 using UnityEngine;
 
 namespace LuaInterface {
@@ -42,10 +43,6 @@ namespace LuaInterface {
 			}
 		}
 
-		/// <summary>
-		/// beZip = false 在search path 中查找读取lua文件。否则从外部设置过来bundel文件中读取lua文件
-		/// </summary>
-		public bool beZip = false;
 		protected List<string> searchPaths = new List<string> ();
 		protected Dictionary<string, AssetBundle> zipMap = new Dictionary<string, AssetBundle> ();
 
@@ -75,7 +72,6 @@ namespace LuaInterface {
 		/// <param name="front"></param>
 		/// <returns></returns>
 		public bool AddSearchPath (string path, bool front = false) {
-			Debugger.Log ("AddSearchPath path:" + path);
 			int index = searchPaths.IndexOf (path);
 
 			if (index >= 0) {
@@ -103,7 +99,7 @@ namespace LuaInterface {
 		}
 
 		public void AddSearchBundle (string name, AssetBundle bundle) {
-			Debugger.Log ("AddSearchBundle name:" + name);
+			Debugger.LogWarning ("AddSearchBundle name:" + name);
 			zipMap[name] = bundle;
 		}
 
@@ -138,7 +134,7 @@ namespace LuaInterface {
 		}
 
 		public virtual byte[] ReadFile (string fileName) {
-			if (!beZip) {
+			if (AppConst.LoadLuaType == AppConst.LuaLoadMode.ToFile) {
 				string path = FindFile (fileName);
 				byte[] str = null;
 
@@ -149,7 +145,6 @@ namespace LuaInterface {
 					throw new LuaException ("can't run in web platform, please switch to other platform");
 #endif
 				}
-
 				return str;
 			} else {
 				return ReadZipFile (fileName);
@@ -174,7 +169,7 @@ namespace LuaInterface {
 
 				sb = sb.Replace ("?", fileName);
 
-				if (beZip) {
+				if (AppConst.LoadLuaType == AppConst.LuaLoadMode.ToAb) {
 					int pos = fileName.LastIndexOf ('/');
 
 					if (pos > 0) {
@@ -201,7 +196,7 @@ namespace LuaInterface {
 				fileName += ".lua.bytes";
 			}
 
-			// Debug.Log("ReadZipFile " + fileName);
+			// Debugger.Log("ReadZipFile " + fileName);
 
 			AssetBundle zipFile = null;
 			byte[] buffer = null;
@@ -218,7 +213,7 @@ namespace LuaInterface {
 			if (luaCode == null) {
 				if (zipMap.TryGetValue ("tolua", out zipFile)) {
 					string fileUrl = string.Format ("Assets/lua2txt/tolua/{0}", fileName);
-					Debug.Log("tolua fileUrl=="+fileUrl);
+					// Debugger.Log("tolua fileUrl=="+fileUrl);
 					luaCode = zipFile.LoadAsset<TextAsset> (fileUrl);
 				}
 			}

@@ -8,14 +8,14 @@ namespace LuaFramework {
 		/// <summary>
 		/// 调试模式-用于内部测试
 		/// </summary>
-		public const bool DebugMode = false;
+		public const bool DebugMode = true;
 		/// <summary>
 		/// 更新模式-默认关闭 
 		/// 如果开启更新模式，前提必须启动框架自带服务器端。
 		/// 否则就需要自己将StreamingAssets里面的所有内容
 		/// 复制到自己的Webserver上面，并修改下面的WebUrl。
 		/// </summary>
-		public const bool UpdateMode = false;
+		public const bool UpdateMode = true;
 		public const int TimerInterval = 1;
 		/// <summary>
 		/// 游戏帧频
@@ -40,7 +40,7 @@ namespace LuaFramework {
 		/// <summary>
 		/// 素材目录
 		/// </summary>
-		public const string AssetDir = "StreamingAssets/game"; 
+		public const string AssetDir = "StreamingAssets/game";
 		//测试更新地址
 		public const string WebUrl = "http://localhost:6688/";
 		/// <summary>
@@ -60,5 +60,12 @@ namespace LuaFramework {
 				return Application.dataPath + "/" + AppName;
 			}
 		}
+		public enum LuaLoadMode {
+			//在 search path 路径读.lua文件
+			ToFile,
+			//在bundel文件里读代码文本
+			ToAb
+		}
+		public static LuaLoadMode LoadLuaType = LuaLoadMode.ToAb;
 	}
 }

@@ -49,6 +49,9 @@ namespace LuaFramework {
 		public static SoundManager GetSoundManager () {
 			return AppFacade.Instance.GetManager<SoundManager> (ManagerName.Sound);
 		}
+		public static LuaManager GetLuaManager () {
+			return AppFacade.Instance.GetManager<LuaManager> (ManagerName.Lua);
+		}
 
 		/// <summary>
 		/// pbc/pblua函数回调

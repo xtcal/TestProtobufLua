@@ -194,6 +194,9 @@ public static class LuaBinder
 		LuaFramework_ThreadManagerWrap.Register(L);
 		LuaFramework_NetworkManagerWrap.Register(L);
 		LuaFramework_ResourceManagerWrap.Register(L);
+		L.BeginModule("AppConst");
+		LuaFramework_AppConst_LuaLoadModeWrap.Register(L);
+		L.EndModule();
 		L.EndModule();
 		L.BeginModule("System");
 		System_ConvertWrap.Register(L);

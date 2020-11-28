@@ -89,8 +89,6 @@ public class TestABLoader : MonoBehaviour
 #else
         Application.RegisterLogCallback(ShowTips);
 #endif
-        LuaFileUtils file = new LuaFileUtils();
-        file.beZip = true;
 #if UNITY_ANDROID && UNITY_EDITOR
         if (IntPtr.Size == 8)
         {

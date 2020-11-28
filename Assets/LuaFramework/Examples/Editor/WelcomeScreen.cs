@@ -123,11 +123,11 @@ public class WelcomeScreen : EditorWindow
         }
     }
 
-    [UnityEditor.MenuItem("LuaFramework/Welcome Screen", false, 1)]
-    public static void ShowWindow()
-    {
-        WelcomeScreen window = EditorWindow.GetWindow<WelcomeScreen>(true, "Welcome to LuaFramework");
-        window.minSize = window.maxSize = new Vector2(410f, 410f);
-        UnityEngine.Object.DontDestroyOnLoad(window);
-    }
+    // [UnityEditor.MenuItem("LuaFramework/Welcome Screen", false, 1)]
+    // public static void ShowWindow()
+    // {
+    //     WelcomeScreen window = EditorWindow.GetWindow<WelcomeScreen>(true, "Welcome to LuaFramework");
+    //     window.minSize = window.maxSize = new Vector2(410f, 410f);
+    //     UnityEngine.Object.DontDestroyOnLoad(window);
+    // }
 }

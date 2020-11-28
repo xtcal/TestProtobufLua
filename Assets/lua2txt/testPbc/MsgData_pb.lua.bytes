@@ -13,12 +13,16 @@ function this.InitProtos()
 		lua_protobuf_dir = UnityEngine.Application.dataPath .. "/" .. AppConst.AssetDir .. "/files/proto"
 	end
 	local allProtos = require("testPbc.allPb")
+	local protosFiles = {}
 	for i, v in pairs(allProtos) do
 		require("testPbc/lua/" .. v .. "_pb")
+		table.insert(protosFiles,v..".proto")
 	end
 
 	local parser = require "3rd/pbc/parser"
-	parser.register(allProtos, lua_protobuf_dir)
+	parser.register(protosFiles, lua_protobuf_dir)
+
+	log(11111)
 end
 
 function this.GenData(str, code)
@@ -33,4 +37,4 @@ function this.GenData(str, code)
 		return protobuf.encode(str, _new)
 	end
 	return _new
-end
+end 

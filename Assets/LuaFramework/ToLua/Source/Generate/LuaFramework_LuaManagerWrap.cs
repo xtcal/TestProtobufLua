@@ -12,6 +12,9 @@ public class LuaFramework_LuaManagerWrap
 		L.RegFunction("CallFunction", CallFunction);
 		L.RegFunction("LuaGC", LuaGC);
 		L.RegFunction("Close", Close);
+		L.RegFunction("EnterGame", EnterGame);
+		L.RegFunction("AddSearchBundle", AddSearchBundle);
+		L.RegFunction("UnloadModule", UnloadModule);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
@@ -93,6 +96,80 @@ public class LuaFramework_LuaManagerWrap
 			ToLua.CheckArgsCount(L, 1);
 			LuaFramework.LuaManager obj = (LuaFramework.LuaManager)ToLua.CheckObject<LuaFramework.LuaManager>(L, 1);
 			obj.Close();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int EnterGame(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			LuaFramework.LuaManager obj = (LuaFramework.LuaManager)ToLua.CheckObject<LuaFramework.LuaManager>(L, 1);
+			obj.EnterGame();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int AddSearchBundle(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 2)
+			{
+				LuaFramework.LuaManager obj = (LuaFramework.LuaManager)ToLua.CheckObject<LuaFramework.LuaManager>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				obj.AddSearchBundle(arg0);
+				return 0;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes<byte[]>(L, 3))
+			{
+				LuaFramework.LuaManager obj = (LuaFramework.LuaManager)ToLua.CheckObject<LuaFramework.LuaManager>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				byte[] arg1 = ToLua.CheckByteBuffer(L, 3);
+				obj.AddSearchBundle(arg0, arg1);
+				return 0;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes<UnityEngine.AssetBundle>(L, 3))
+			{
+				LuaFramework.LuaManager obj = (LuaFramework.LuaManager)ToLua.CheckObject<LuaFramework.LuaManager>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				UnityEngine.AssetBundle arg1 = (UnityEngine.AssetBundle)ToLua.ToObject(L, 3);
+				obj.AddSearchBundle(arg0, arg1);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: LuaFramework.LuaManager.AddSearchBundle");
+			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UnloadModule(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			LuaFramework.LuaManager obj = (LuaFramework.LuaManager)ToLua.CheckObject<LuaFramework.LuaManager>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.UnloadModule(arg0);
 			return 0;
 		}
 		catch (Exception e)

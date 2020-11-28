@@ -71,7 +71,6 @@
      <Compile Include="Assets\Plugins\AssetBundles-Browser-master\Tests\Editor\AssetBundleRecordTests.cs" />
      <Compile Include="Assets\Plugins\AssetBundles-Browser-master\Tests\Editor\Util\ABModelUtil.cs" />
      <Compile Include="Assets\Plugins\AssetBundles-Browser-master\Tests\Editor\Util\TestUtil.cs" />
-     <None Include="Assets\StreamingAssets\build_info.txt" />
      <None Include="Assets\StreamingAssets\game\files.txt" />
      <None Include="Assets\Plugins\Protobuf\Core\Plugins\Google.ProtocolBuffers.xml" />
      <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\requires.txt" />
@@ -86,6 +85,7 @@
      <None Include="Assets\LuaFramework\ToLua\Injection\LuaInjectionSkipPaths.txt" />
      <None Include="Assets\LuaFramework\ToLua\Injection\InjectionBlackList.txt" />
      <None Include="Assets\Plugins\DOTween\DOTween43.xml" />
+     <None Include="Assets\StreamingAssets\build_info.txt" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>D:/Program Files/Unity5.6.4p1/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>

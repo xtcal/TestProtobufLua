@@ -2,6 +2,7 @@
 ---@field public DataPath string
 ---@field public NetAvailable bool
 ---@field public IsWifi bool
+---@field public AppContentPath string
 local Util = {}
 ---@public
 ---@param o Object
@@ -87,9 +88,6 @@ function Util.GetRelativePath() end
 ---@param path string
 ---@return string
 function Util.GetFileText(path) end
----@public
----@return string
-function Util.AppContentPath() end
 ---@public
 ---@param str string
 ---@return void

@@ -1,7 +1,3 @@
-require "common/tools"
-require "common/define"
-
---管理器--
 Game = {}
 local this = Game
 

@@ -22,7 +22,6 @@ public class LuaFramework_UtilWrap
 		L.RegFunction("ClearMemory", ClearMemory);
 		L.RegFunction("GetRelativePath", GetRelativePath);
 		L.RegFunction("GetFileText", GetFileText);
-		L.RegFunction("AppContentPath", AppContentPath);
 		L.RegFunction("Log", Log);
 		L.RegFunction("LogWarning", LogWarning);
 		L.RegFunction("LogError", LogError);
@@ -37,6 +36,7 @@ public class LuaFramework_UtilWrap
 		L.RegVar("DataPath", get_DataPath, null);
 		L.RegVar("NetAvailable", get_NetAvailable, null);
 		L.RegVar("IsWifi", get_IsWifi, null);
+		L.RegVar("AppContentPath", get_AppContentPath, null);
 		L.EndClass();
 	}
 
@@ -374,22 +374,6 @@ public class LuaFramework_UtilWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int AppContentPath(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 0);
-			string o = LuaFramework.Util.AppContentPath();
-			LuaDLL.lua_pushstring(L, o);
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int Log(IntPtr L)
 	{
 		try
@@ -570,6 +554,20 @@ public class LuaFramework_UtilWrap
 		try
 		{
 			LuaDLL.lua_pushboolean(L, LuaFramework.Util.IsWifi);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_AppContentPath(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, LuaFramework.Util.AppContentPath);
 			return 1;
 		}
 		catch (Exception e)
