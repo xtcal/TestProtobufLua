@@ -87,73 +87,74 @@ end
 function this.testPbc()
 	--初始化
 	require "testPbc/MsgData_pb"
-	MsgData.InitProtos()
-
-	local _mData = MsgData.protoBase.MessageData()
-	local _user = MsgData.protoLoginUser.CS_LoginUser()
-	_user.uid = "12345"
-	_user.userName = "夏老湿"
-	_user.passWord = "1234"
-	_mData.desc = _user._desc
-	--_mData.data = _user.Encode()
-	--log("_mData111", table_tostring(_mData))
-	local data = _user.Encode()
-	log("encode data:", data)
-	UDPClient.SendMsg(data)
-
-	local u = MsgData.protoLoginUser.CS_LoginUser(data)
-	log("lua decode :", table_tostring(u))
-
-	data = UDPClient.GetData();
-	local _user = MsgData.protoLoginUser.CS_LoginUser(data)
-	log("c# _user decode _user:", table_tostring(_user))
-
-	function this.Init()
-		log("MsgData == " .. table_tostring(MsgData))
-
-		local _mData = MsgData.base.MessageData()
-
-		local _user = MsgData.LoginUser.CS_LoginUser()
-		_user.passWord = "1234"
+	MsgData.InitProtos(function()
+		local _mData = MsgData.protoBase.MessageData()
+		local _user = MsgData.protoLoginUser.CS_LoginUser()
 		_user.uid = "12345"
-		_user.userName = "5555"
-
+		_user.userName = "夏老湿"
+		_user.passWord = "1234"
 		_mData.desc = _user._desc
-		_mData.data = _user.Encode()
+		--_mData.data = _user.Encode()
+		--log("_mData111", table_tostring(_mData))
+		local data = _user.Encode()
+		log("encode data:", data)
+		UDPClient.SendMsg(data)
 
-		-- local hData = protobuf.decode("base.MessageData", _mData.Encode()) ---@type base.MessageData
+		local u = MsgData.protoLoginUser.CS_LoginUser(data)
+		log("lua decode :", table_tostring(u))
 
-		-- local user = protobuf.decode(hData.desc, hData.data)	---@type LoginUser.CS_LoginUser
-		-- log("_mData == " , table_tostring(_mData))
+		data = UDPClient.GetData();
+		local _user = MsgData.protoLoginUser.CS_LoginUser(data)
+		log("c# _user decode _user:", table_tostring(_user))
 
-		Event.AddListener("LoginUser.CS_LoginUser", function(user)
-			log("user.uid == ", table_tostring(user))
-		end)
+		function this.Init()
+			log("MsgData == " .. table_tostring(MsgData))
 
-		-- this.GetData(_mData.Encode())
+			local _mData = MsgData.base.MessageData()
 
-		---@type File
-		System.IO.File.WriteAllText("e:/1.txt", System.Convert.ToString(_mData.Encode()))
+			local _user = MsgData.LoginUser.CS_LoginUser()
+			_user.passWord = "1234"
+			_user.uid = "12345"
+			_user.userName = "5555"
 
-		-- this.GetData(System.Convert.FromBase64String(System.IO.File.ReadAllText("e:/1.txt")))
-	end
-	function this.GetData(code)
-		log("code == " .. tostring(code))
-		local hData = MsgData.base.MessageData(code)
-		log("hData == " .. table_tostring(hData))
-		if hData.desc then
-			local mData = MsgData[hData.desc](hData.data)
-			Event.Brocast(hData.desc, mData)
-		else
-			local key = hData.com .. "_" .. hData.task
-			Event.Brocast(key, DellTab[key]())
+			_mData.desc = _user._desc
+			_mData.data = _user.Encode()
+
+			-- local hData = protobuf.decode("base.MessageData", _mData.Encode()) ---@type base.MessageData
+
+			-- local user = protobuf.decode(hData.desc, hData.data)	---@type LoginUser.CS_LoginUser
+			-- log("_mData == " , table_tostring(_mData))
+
+			Event.AddListener("LoginUser.CS_LoginUser", function(user)
+				log("user.uid == ", table_tostring(user))
+			end)
+
+			-- this.GetData(_mData.Encode())
+
+			---@type File
+			System.IO.File.WriteAllText("e:/1.txt", System.Convert.ToString(_mData.Encode()))
+
+			-- this.GetData(System.Convert.FromBase64String(System.IO.File.ReadAllText("e:/1.txt")))
 		end
-	end
+		function this.GetData(code)
+			log("code == " .. tostring(code))
+			local hData = MsgData.base.MessageData(code)
+			log("hData == " .. table_tostring(hData))
+			if hData.desc then
+				local mData = MsgData[hData.desc](hData.data)
+				Event.Brocast(hData.desc, mData)
+			else
+				local key = hData.com .. "_" .. hData.task
+				Event.Brocast(key, DellTab[key]())
+			end
+		end
 
-	function this.Send(data)
-		local _mData = MsgData.base.MessageData()
-		_mData.desc = data._desc
-		_mData.data = data.Encode()
-		_mData.Encode()
-	end
+		function this.Send(data)
+			local _mData = MsgData.base.MessageData()
+			_mData.desc = data._desc
+			_mData.data = data.Encode()
+			_mData.Encode()
+		end
+	end)
+
 end

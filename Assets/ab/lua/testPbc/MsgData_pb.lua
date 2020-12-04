@@ -7,22 +7,47 @@ local Directory = System.IO.Directory
 local Path = System.IO.Path
 
 --初始化 消息proto
-function this.InitProtos()
-	local lua_protobuf_dir = UnityEngine.Application.dataPath .. "/ab/files/proto"
-	if UnityEngine.Application.isMobilePlatform then
-		lua_protobuf_dir = UnityEngine.Application.dataPath .. "/" .. AppConst.AssetDir .. "/files/proto"
-	end
+function this.InitProtos(callback)
+	local lua_protobuf_dir = LuaFramework.Util.DataPath .. "files/proto/"
 	local allProtos = require("testPbc.allPb")
 	local protosFiles = {}
+	local needUpdate = {}
 	for i, v in pairs(allProtos) do
 		require("testPbc/lua/" .. v .. "_pb")
-		table.insert(protosFiles,v..".proto")
+		local file = lua_protobuf_dir .. v .. ".proto"
+		log("proto file path:" .. file)
+		if System.IO.File.Exists(file) then
+			table.insert(protosFiles, v .. ".proto")
+		else
+			table.insert(needUpdate, v)
+		end
 	end
 
 	local parser = require "3rd/pbc/parser"
-	parser.register(protosFiles, lua_protobuf_dir)
-
-	log(11111)
+	main.StartCoroutine(function()
+		coroutine.step()
+		local _allBuffs = {}
+		for i, v in pairs(needUpdate) do
+			local url = "http://192.168.20.234/zxUpdate/TestProtobufLua/proto/" .. v .. ".proto"
+			local www = UnityEngine.WWW(url)
+			coroutine.www(www)
+			table.insert(_allBuffs, {
+				filename = v .. ".proto",
+				buffer = www.text,
+			})
+			local fileUrl = lua_protobuf_dir .. v .. ".proto";
+			local path = System.IO.Path.GetDirectoryName(fileUrl)
+			if not System.IO.Directory.Exists(path) then
+				System.IO.Directory.CreateDirectory(path)
+			end
+			System.IO.File.WriteAllBytes(lua_protobuf_dir .. v .. ".proto", www.bytes)
+		end
+		--log("_allBuffs:"..table_tostring(_allBuffs))
+		parser.register(protosFiles, lua_protobuf_dir, _allBuffs)
+		if callback then
+			callback()
+		end
+	end)
 end
 
 function this.GenData(str, code)
