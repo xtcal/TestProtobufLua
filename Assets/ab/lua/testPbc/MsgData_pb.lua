@@ -19,7 +19,7 @@ function this.InitProtos(callback)
 		if System.IO.File.Exists(file) then
 			table.insert(protosFiles, v .. ".proto")
 		else
-			table.insert(needUpdate, v)
+			table.insert(needUpdate, v .. ".proto")
 		end
 	end
 
@@ -28,19 +28,19 @@ function this.InitProtos(callback)
 		coroutine.step()
 		local _allBuffs = {}
 		for i, v in pairs(needUpdate) do
-			local url = "http://192.168.20.234/zxUpdate/TestProtobufLua/proto/" .. v .. ".proto"
+			local url = "http://192.168.20.234/zxUpdate/TestProtobufLua/proto/" .. v
 			local www = UnityEngine.WWW(url)
 			coroutine.www(www)
 			table.insert(_allBuffs, {
-				filename = v .. ".proto",
+				filename = v,
 				buffer = www.text,
 			})
-			local fileUrl = lua_protobuf_dir .. v .. ".proto";
+			local fileUrl = lua_protobuf_dir .. v;
 			local path = System.IO.Path.GetDirectoryName(fileUrl)
 			if not System.IO.Directory.Exists(path) then
 				System.IO.Directory.CreateDirectory(path)
 			end
-			System.IO.File.WriteAllBytes(lua_protobuf_dir .. v .. ".proto", www.bytes)
+			System.IO.File.WriteAllBytes(lua_protobuf_dir .. v, www.bytes)
 		end
 		--log("_allBuffs:"..table_tostring(_allBuffs))
 		parser.register(protosFiles, lua_protobuf_dir, _allBuffs)

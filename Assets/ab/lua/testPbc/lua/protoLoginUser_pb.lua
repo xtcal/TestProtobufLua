@@ -4,8 +4,8 @@ MsgData.protoLoginUser = {
 	---@field public userName string 
 	---@field public passWord string 
 	---@return protoLoginUser.CS_LoginUser
-	CS_LoginUser = function (code)
-		return MsgData.GenData("protoLoginUser.CS_LoginUser",code)
+	CS_LoginUser = function(code)
+		return MsgData.GenData("protoLoginUser.CS_LoginUser", code)
 	end,
 
 	---@class protoLoginUser.SC_LoginUser 用户信息
@@ -16,8 +16,8 @@ MsgData.protoLoginUser = {
 	---@field public Token string 
 	---@field public vet protoBase.GVector3 
 	---@return protoLoginUser.SC_LoginUser
-	SC_LoginUser = function (code)
-		return MsgData.GenData("protoLoginUser.SC_LoginUser",code)
+	SC_LoginUser = function(code)
+		return MsgData.GenData("protoLoginUser.SC_LoginUser", code)
 	end,
 
 }

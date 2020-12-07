@@ -60,7 +60,7 @@ end
 function log(...)
 	local a = { ... }
 	local str = Concat(a)
-	print(str)
+	Util.Log(str)
 end
 
 --警告日志--

@@ -3,8 +3,8 @@ local this = Game
 
 --初始化完成，发送链接服务器信息--
 function this.OnInitOK()
-	this.testPbc()
-	--this.testProtobuf()
+	--this.testPbc()
+	this.testProtobuf()
 end
 
 --销毁--
@@ -74,12 +74,12 @@ function this.testProtobuf()
 
 	local _data = {}
 	_data = UDPClient.GetData();  --这里只能解utf8 string
-	log("UDPClient.GetData() _data :", _data)
+	print("UDPClient.GetData() _data :", _data)
 	local _user = protoLoginUser_pb.CS_LoginUser()
 	_user:ParseFromString(_data)
 
-	log("ParseFromString _user:", _user.userName, _user.uid, table_tostring(_user))
-	log("ParseFromString uid:", _user.uid)
+	print("ParseFromString _user:", _user.userName, _user.uid, table_tostring(_user))
+	print("ParseFromString uid:", _user.uid)
 end
 
 --lua -> c# 可以，c# -> lua 字节顺序有问题 (https://github.com/cloudwu/pbc/issues/95) (用string似乎没这问题)
@@ -156,5 +156,4 @@ function this.testPbc()
 			_mData.Encode()
 		end
 	end)
-
 end

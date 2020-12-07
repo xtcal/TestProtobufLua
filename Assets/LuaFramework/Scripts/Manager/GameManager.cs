@@ -23,7 +23,7 @@ namespace LuaFramework {
 		/// </summary>
 		void Init () {
 			DontDestroyOnLoad (gameObject); //防止销毁自己
-			Screen.sleepTimeout = SleepTimeout.NeverSleep;
+			Screen.sleepTimeout = SleepTimeout.SystemSetting;
 			Application.targetFrameRate = AppConst.GameFrameRate; //锁帧
 
 			StartCoroutine (StartGame ());
@@ -32,6 +32,7 @@ namespace LuaFramework {
 		}
 
 		public IEnumerator StartGame () {
+			yield return new WaitForEndOfFrame ();
 			var abs = new List<string> () {
 				"lua/tolua.unity3d",
 				"lua/common.unity3d",

@@ -66,6 +66,10 @@ namespace LuaFramework {
 			//在bundel文件里读代码文本
 			ToAb
 		}
+#if UNITY_EDITOR
+		public static LuaLoadMode LoadLuaType = LuaLoadMode.ToFile;
+#else
 		public static LuaLoadMode LoadLuaType = LuaLoadMode.ToAb;
+#endif
 	}
 }

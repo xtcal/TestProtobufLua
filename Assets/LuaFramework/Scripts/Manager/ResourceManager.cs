@@ -145,9 +145,6 @@ namespace LuaFramework {
 					AssetBundleRequest request = ab.LoadAssetAsync (assetPath, list[i].assetType); //异步加载这个asset
 					yield return request;
 					result.Add (request.asset as T);
-
-					//T assetObj = ab.LoadAsset<T>(assetPath);
-					//result.Add(assetObj);
 				}
 				if (list[i].sharpFunc != null) {
 					list[i].sharpFunc (result.ToArray ());

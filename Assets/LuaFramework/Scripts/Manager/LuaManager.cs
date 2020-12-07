@@ -24,7 +24,6 @@ namespace LuaFramework {
 
 		public void InitStart () {
 			InitLuaPath ();
-			InitLuaBundle ();
 			this.lua.Start (); //启动LUAVM
 			this.StartMain ();
 			this.StartLooper ();
@@ -83,35 +82,6 @@ namespace LuaFramework {
 			}
 		}
 
-		/// <summary>
-		/// 初始化LuaBundle
-		/// </summary>
-		void InitLuaBundle () {
-			if (AppConst.LoadLuaType == AppConst.LuaLoadMode.ToAb) {
-				// AddSearchBundle ("lua/tolua.unity3d");
-				// loader.AddBundle ("lua/lua.unity3d");
-				// loader.AddBundle ("lua/lua_math.unity3d");
-				// loader.AddBundle ("lua/lua_system.unity3d");
-				// loader.AddBundle ("lua/lua_system_reflection.unity3d");
-				// loader.AddBundle ("lua/lua_unityengine.unity3d");
-
-				// loader.AddBundle ("lua/common.unity3d");
-				// loader.AddBundle ("lua/logic.unity3d");
-				// loader.AddBundle ("lua/testpbc.unity3d");
-				// loader.AddBundle ("lua/testprotobuf.unity3d");
-
-				// loader.AddBundle ("lua/lua_view.unity3d");
-				// loader.AddBundle ("lua/lua_controller.unity3d");
-				// loader.AddBundle ("lua/lua_misc.unity3d");
-				// loader.AddBundle ("lua/lua_protobuf.unity3d");
-				// loader.AddBundle ("lua/lua_3rd_cjson.unity3d");
-				// loader.AddBundle ("lua/lua_3rd_luabitop.unity3d");
-				// loader.AddBundle ("lua/lua_3rd_pbc.unity3d");
-				// loader.AddBundle ("lua/lua_3rd_pblua.unity3d");
-				// loader.AddBundle ("lua/lua_3rd_sproto.unity3d");
-			}
-		}
-
 		public void DoFile (string filename) {
 			lua.DoFile (filename);
 		}
@@ -157,7 +127,7 @@ namespace LuaFramework {
 				Debugger.LogError ("AddSearchBundle find err {0} {1}", url, ex.Message);
 			}
 		}
- 
+
 		public void AddSearchBundle (string name, AssetBundle bundle) {
 			loader.AddSearchBundle (name, bundle);
 		}

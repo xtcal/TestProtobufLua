@@ -2,7 +2,6 @@
 local protobuf = require "protobuf"
 module('protoBase_pb')
 
-
 local localTable = {}
 localTable.CORPUS = protobuf.EnumDescriptor()
 localTable.CORPUS_UNIVERSAL_ENUM = protobuf.EnumValueDescriptor()
@@ -74,7 +73,15 @@ localTable.CORPUS_VIDEO_ENUM.index = 6
 localTable.CORPUS_VIDEO_ENUM.number = 6
 localTable.CORPUS.name = "Corpus"
 localTable.CORPUS.full_name = "protoBase.Corpus"
-localTable.CORPUS.values = {localTable.CORPUS_UNIVERSAL_ENUM,localTable.CORPUS_WEB_ENUM,localTable.CORPUS_IMAGES_ENUM,localTable.CORPUS_LOCAL_ENUM,localTable.CORPUS_NEWS_ENUM,localTable.CORPUS_PRODUCTS_ENUM,localTable.CORPUS_VIDEO_ENUM}
+localTable.CORPUS.values = {
+	localTable.CORPUS_UNIVERSAL_ENUM,
+	localTable.CORPUS_WEB_ENUM,
+	localTable.CORPUS_IMAGES_ENUM,
+	localTable.CORPUS_LOCAL_ENUM,
+	localTable.CORPUS_NEWS_ENUM,
+	localTable.CORPUS_PRODUCTS_ENUM,
+	localTable.CORPUS_VIDEO_ENUM
+}
 localTable.PHONETYPE_MOBILE_ENUM.name = "MOBILE"
 localTable.PHONETYPE_MOBILE_ENUM.index = 0
 localTable.PHONETYPE_MOBILE_ENUM.number = 0
@@ -86,7 +93,7 @@ localTable.PHONETYPE_WORK_ENUM.index = 2
 localTable.PHONETYPE_WORK_ENUM.number = 2
 localTable.PHONETYPE.name = "PhoneType"
 localTable.PHONETYPE.full_name = "protoBase.PhoneType"
-localTable.PHONETYPE.values = {localTable.PHONETYPE_MOBILE_ENUM,localTable.PHONETYPE_HOME_ENUM,localTable.PHONETYPE_WORK_ENUM}
+localTable.PHONETYPE.values = { localTable.PHONETYPE_MOBILE_ENUM, localTable.PHONETYPE_HOME_ENUM, localTable.PHONETYPE_WORK_ENUM }
 localTable.GIPENDPOINT_IP_FIELD.name = "Ip"
 localTable.GIPENDPOINT_IP_FIELD.full_name = "protoBase.GIPEndPoint.Ip"
 localTable.GIPENDPOINT_IP_FIELD.number = 1
@@ -111,7 +118,7 @@ GIPENDPOINT.name = "GIPEndPoint"
 GIPENDPOINT.full_name = "protoBase.GIPEndPoint"
 GIPENDPOINT.nested_types = {}
 GIPENDPOINT.enum_types = {}
-GIPENDPOINT.fields = {localTable.GIPENDPOINT_IP_FIELD, localTable.GIPENDPOINT_PORT_FIELD}
+GIPENDPOINT.fields = { localTable.GIPENDPOINT_IP_FIELD, localTable.GIPENDPOINT_PORT_FIELD }
 GIPENDPOINT.is_extendable = false
 GIPENDPOINT.extensions = {}
 localTable.GVECTOR3_X_FIELD.name = "X"
@@ -148,7 +155,7 @@ GVECTOR3.name = "GVector3"
 GVECTOR3.full_name = "protoBase.GVector3"
 GVECTOR3.nested_types = {}
 GVECTOR3.enum_types = {}
-GVECTOR3.fields = {localTable.GVECTOR3_X_FIELD, localTable.GVECTOR3_Y_FIELD, localTable.GVECTOR3_Z_FIELD}
+GVECTOR3.fields = { localTable.GVECTOR3_X_FIELD, localTable.GVECTOR3_Y_FIELD, localTable.GVECTOR3_Z_FIELD }
 GVECTOR3.is_extendable = false
 GVECTOR3.extensions = {}
 localTable.MESSAGEDATA_RET_FIELD.name = "ret"
@@ -205,7 +212,7 @@ MESSAGEDATA.name = "MessageData"
 MESSAGEDATA.full_name = "protoBase.MessageData"
 MESSAGEDATA.nested_types = {}
 MESSAGEDATA.enum_types = {}
-MESSAGEDATA.fields = {localTable.MESSAGEDATA_RET_FIELD, localTable.MESSAGEDATA_DESC_FIELD, localTable.MESSAGEDATA_COM_FIELD, localTable.MESSAGEDATA_TSAK_FIELD, localTable.MESSAGEDATA_DATA_FIELD}
+MESSAGEDATA.fields = { localTable.MESSAGEDATA_RET_FIELD, localTable.MESSAGEDATA_DESC_FIELD, localTable.MESSAGEDATA_COM_FIELD, localTable.MESSAGEDATA_TSAK_FIELD, localTable.MESSAGEDATA_DATA_FIELD }
 MESSAGEDATA.is_extendable = false
 MESSAGEDATA.extensions = {}
 localTable.PHONENUMBER_NUMBER_FIELD.name = "number"
@@ -233,7 +240,7 @@ PHONENUMBER.name = "PhoneNumber"
 PHONENUMBER.full_name = "protoBase.PhoneNumber"
 PHONENUMBER.nested_types = {}
 PHONENUMBER.enum_types = {}
-PHONENUMBER.fields = {localTable.PHONENUMBER_NUMBER_FIELD, localTable.PHONENUMBER_TYPE_FIELD}
+PHONENUMBER.fields = { localTable.PHONENUMBER_NUMBER_FIELD, localTable.PHONENUMBER_TYPE_FIELD }
 PHONENUMBER.is_extendable = false
 PHONENUMBER.extensions = {}
 localTable.PERSON_NAME_FIELD.name = "name"
@@ -281,7 +288,7 @@ PERSON.name = "Person"
 PERSON.full_name = "protoBase.Person"
 PERSON.nested_types = {}
 PERSON.enum_types = {}
-PERSON.fields = {localTable.PERSON_NAME_FIELD, localTable.PERSON_ID_FIELD, localTable.PERSON_EMAIL_FIELD, localTable.PERSON_PHONE_FIELD}
+PERSON.fields = { localTable.PERSON_NAME_FIELD, localTable.PERSON_ID_FIELD, localTable.PERSON_EMAIL_FIELD, localTable.PERSON_PHONE_FIELD }
 PERSON.is_extendable = false
 PERSON.extensions = {}
 localTable.ADDRESSBOOK_PERSON_FIELD.name = "person"
@@ -299,7 +306,7 @@ ADDRESSBOOK.name = "AddressBook"
 ADDRESSBOOK.full_name = "protoBase.AddressBook"
 ADDRESSBOOK.nested_types = {}
 ADDRESSBOOK.enum_types = {}
-ADDRESSBOOK.fields = {localTable.ADDRESSBOOK_PERSON_FIELD}
+ADDRESSBOOK.fields = { localTable.ADDRESSBOOK_PERSON_FIELD }
 ADDRESSBOOK.is_extendable = false
 ADDRESSBOOK.extensions = {}
 

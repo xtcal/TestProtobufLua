@@ -1,16 +1,17 @@
 require "main.define"
 require "common.tools"
 main = {}
-log = print
 local this = main
+this.dps = {
+	"lua/logic.unity3d",
+	"lua/testpbc.unity3d",
+}
 function this.Init()
-	this.dps = {
-		"lua/logic.unity3d",
-		"lua/testpbc.unity3d",
-	}
 	if not AppConst.UpdateMode then
-		for i, v in pairs(this.dps) do
-			luaMgr:AddSearchBundle(v)
+		if AppConst.LuaLoadMode == AppConst.LuaLoadMode.ToAb then
+			for i, v in pairs(this.dps) do
+				luaMgr:AddSearchBundle(v)
+			end
 		end
 		require "logic.Game"
 		Game.OnInitOK()
