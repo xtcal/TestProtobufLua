@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace LuaFramework {
 	public class SoundManager : Manager {
-		private AudioSource audio;
+		private AudioSource audioo;
 		private Hashtable sounds = new Hashtable ();
 
 		void Start () {
-			audio = GetComponent<AudioSource> ();
+			audioo = GetComponent<AudioSource> ();
 		}
 
 		/// <summary>
@@ -54,23 +54,23 @@ namespace LuaFramework {
 		/// </summary>
 		/// <param name="canPlay"></param>
 		public void PlayBacksound (string name, bool canPlay) {
-			if (audio.clip != null) {
-				if (name.IndexOf (audio.clip.name) > -1) {
+			if (audioo.clip != null) {
+				if (name.IndexOf (audioo.clip.name) > -1) {
 					if (!canPlay) {
-						audio.Stop ();
-						audio.clip = null;
+						audioo.Stop ();
+						audioo.clip = null;
 						Util.ClearMemory ();
 					}
 					return;
 				}
 			}
 			if (canPlay) {
-				audio.loop = true;
-				audio.clip = LoadAudioClip (name);
-				audio.Play ();
+				audioo.loop = true;
+				audioo.clip = LoadAudioClip (name);
+				audioo.Play ();
 			} else {
-				audio.Stop ();
-				audio.clip = null;
+				audioo.Stop ();
+				audioo.clip = null;
 				Util.ClearMemory ();
 			}
 		}

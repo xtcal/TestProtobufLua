@@ -28,7 +28,7 @@ namespace LuaFramework {
 
 			StartCoroutine (StartGame ());
 			return;
-			CheckExtractResource (); //释放资源
+			// CheckExtractResource (); //释放资源
 		}
 
 		public IEnumerator StartGame () {
@@ -80,15 +80,15 @@ namespace LuaFramework {
 				return;
 			}
 
-			bool isExists = Directory.Exists (Util.DataPath) &&
-				Directory.Exists (Util.DataPath + "lua/") &&
-				File.Exists (Util.DataPath + "files.txt");
-			if (isExists) {
-				StartCoroutine (OnUpdateResource ());
-				return; //文件已经解压过了，自己可添加检查文件列表逻辑
-			} else {
-				StartCoroutine (OnExtractResource ()); //启动释放协成 
-			}
+			// bool isExists = Directory.Exists (Util.DataPath) &&
+			// 	Directory.Exists (Util.DataPath + "lua/") &&
+			// 	File.Exists (Util.DataPath + "files.txt");
+			// if (isExists) {
+			// 	StartCoroutine (OnUpdateResource ());
+			// 	return; //文件已经解压过了，自己可添加检查文件列表逻辑
+			// } else {
+			// 	StartCoroutine (OnExtractResource ()); //启动释放协成 
+			// }
 		}
 
 		IEnumerator OnExtractResource () {
@@ -158,10 +158,10 @@ namespace LuaFramework {
 		/// 启动更新下载，这里只是个思路演示，此处可启动线程下载更新
 		/// </summary>
 		IEnumerator OnUpdateResource () {
-			if (!AppConst.UpdateMode) {
-				OnResourceInited ();
-				yield break;
-			}
+			// if (!AppConst.UpdateMode) {
+			// 	OnResourceInited ();
+			// 	yield break;
+			// }
 			string dataPath = Util.DataPath; //数据目录
 			string url = AppConst.WebUrl;
 			string message = string.Empty;
