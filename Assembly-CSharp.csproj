@@ -355,7 +355,6 @@
      <Compile Include="Assets\Unity-Logs-Viewer\Reporter\ReporterMessageReceiver.cs" />
      <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Test\Rotate.cs" />
      <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Test\TestReporter.cs" />
-     <None Include="Assets\StreamingAssets\game\files.txt" />
      <None Include="Assets\Plugins\Protobuf\Core\Plugins\Google.ProtocolBuffers.xml" />
      <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\requires.txt" />
      <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\SOURCES.txt" />

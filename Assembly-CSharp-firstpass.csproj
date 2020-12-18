@@ -123,7 +123,6 @@
      <Compile Include="Assets\Plugins\Protobuf\Core\WireFormat.cs" />
      <Compile Include="Assets\Plugins\Protobuf\Csharp\protoBase.cs" />
      <Compile Include="Assets\Plugins\Protobuf\Csharp\protoLoginUser.cs" />
-     <None Include="Assets\StreamingAssets\game\files.txt" />
      <None Include="Assets\Plugins\Protobuf\Core\Plugins\Google.ProtocolBuffers.xml" />
      <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\requires.txt" />
      <None Include="Assets\Plugins\protoc-gen-lua-bin\python_win32\protobuf.egg-info\SOURCES.txt" />

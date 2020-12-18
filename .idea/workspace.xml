@@ -43,10 +43,10 @@
     </key>
   </component>
   <component name="WindowStateProjectService">
-    <state x="2331" y="304" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1607072150470">
-      <screen x="1680" y="0" width="1680" height="1010" />
+    <state x="651" y="304" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1607590453866">
+      <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="651" y="304" key="#com.intellij.fileTypes.FileTypeChooser/1680.0.1680.1010/0.0.1680.1010@0.0.1680.1010" timestamp="1604046620777" />
+    <state x="651" y="304" key="#com.intellij.fileTypes.FileTypeChooser/1680.0.1680.1010/0.0.1680.1010@0.0.1680.1010" timestamp="1607590453866" />
     <state x="2331" y="304" key="#com.intellij.fileTypes.FileTypeChooser/1680.0.1680.1010/0.0.1680.1010@1680.0.1680.1010" timestamp="1607072150470" />
     <state x="2264" y="359" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1605249839488">
       <screen x="1680" y="0" width="1680" height="1010" />
@@ -74,15 +74,15 @@
     </state>
     <state x="561" y="235" width="540" height="524" key="StructurePopup/1680.0.1680.1010/0.0.1680.1010@0.0.1680.1010" timestamp="1604046584916" />
     <state x="2241" y="235" width="540" height="524" key="StructurePopup/1680.0.1680.1010/0.0.1680.1010@1680.0.1680.1010" timestamp="1606440846274" />
-    <state x="265" y="144" width="1188" height="847" key="find.popup" timestamp="1607074317113">
+    <state x="882" y="138" width="784" height="724" key="find.popup" timestamp="1607590938079">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="882" y="138" width="784" height="724" key="find.popup/1680.0.1680.1010/0.0.1680.1010@0.0.1680.1010" timestamp="1606301744672" />
+    <state x="882" y="138" width="784" height="724" key="find.popup/1680.0.1680.1010/0.0.1680.1010@0.0.1680.1010" timestamp="1607590938079" />
     <state x="265" y="144" width="1188" height="847" key="find.popup/1680.0.1680.1010/0.0.1680.1010@1680.0.1680.1010" timestamp="1607074317113" />
-    <state x="2176" y="147" width="672" height="676" key="search.everywhere.popup" timestamp="1607334886596">
-      <screen x="1680" y="0" width="1680" height="1010" />
+    <state x="496" y="147" width="672" height="676" key="search.everywhere.popup" timestamp="1607590746362">
+      <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="496" y="147" width="672" height="676" key="search.everywhere.popup/1680.0.1680.1010/0.0.1680.1010@0.0.1680.1010" timestamp="1606383009805" />
+    <state x="496" y="147" width="672" height="676" key="search.everywhere.popup/1680.0.1680.1010/0.0.1680.1010@0.0.1680.1010" timestamp="1607590746362" />
     <state x="2176" y="147" width="672" height="676" key="search.everywhere.popup/1680.0.1680.1010/0.0.1680.1010@1680.0.1680.1010" timestamp="1607334886596" />
   </component>
   <component name="XDebuggerManager">
