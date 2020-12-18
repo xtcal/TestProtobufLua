@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,12 +10,11 @@ using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 public class Packager {
-    [MenuItem("Tools/PlayerPrefs.DeleteAll %k")]
-    private static void NewMenuOption()
-    {
-        PlayerPrefs.DeleteAll();
-        Debugger.Log("PlayerPrefs.DeleteAll");
-    }
+	[MenuItem ("Tools/PlayerPrefs.DeleteAll %k")]
+	private static void NewMenuOption () {
+		PlayerPrefs.DeleteAll ();
+		Debugger.Log ("PlayerPrefs.DeleteAll");
+	}
 	static List<string> paths = new List<string> ();
 	static List<string> files = new List<string> ();
 	static List<AssetBundleBuild> maps = new List<AssetBundleBuild> ();
@@ -46,7 +44,6 @@ public class Packager {
 	/// 生成绑定素材
 	/// </summary>
 	public static void BuildAssetResource (BuildTarget target) {
-
 		if (Directory.Exists (Util.DataPath)) {
 			Directory.Delete (Util.DataPath, true);
 		}
@@ -114,6 +111,9 @@ public class Packager {
 	}
 
 	static void AddBuildMap (string bundleName, string pattern, string path) {
+		Debug.Log ("bundleName=" + bundleName);
+		Debug.Log ("pattern=" + pattern);
+		Debug.Log ("path=" + path);
 		string[] files = Directory.GetFiles (path, pattern, SearchOption.AllDirectories);
 		if (files.Length == 0) return;
 
@@ -190,8 +190,15 @@ public class Packager {
 		string resPath = AppDataPath + "/" + AppConst.AssetDir + "/";
 		if (!Directory.Exists (resPath)) Directory.CreateDirectory (resPath);
 
-		AddBuildMap ("res/img" + AppConst.ExtName, "*.*", "Assets/ab/res/img");
-		AddBuildMap ("res/prefab" + AppConst.ExtName, "*.*", "Assets/ab/res/prefab");
+		var topdirs = Directory.GetDirectories ("Assets/ab/res");
+		foreach (var topdir in topdirs) {
+			var topdirName = Path.GetFileName (topdir);
+			var dirs = Directory.GetDirectories ("Assets/ab/res/" + topdirName);
+			foreach (var dir in dirs) {
+				var dirName = Path.GetFileName (dir);
+				AddBuildMap ("res/" + topdirName + "_" + dirName + AppConst.ExtName, "*.*", "Assets/ab/res/" + topdirName + "/" + dirName);
+			}
+		}
 	}
 
 	/// <summary>

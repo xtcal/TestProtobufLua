@@ -27,19 +27,19 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../2020Project/hejibao_2020/build/hjb_client_2020_ex_pc_build" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.completion" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Zhangxin\github\TestProtobufLua\Assets\ab\lua\common" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Zhangxin\github\TestProtobufLua\Assets\ab\lua\common" />
       <recent name="E:\Zhangxin\github\TestProtobufLua\Assets\ab\lua\main" />
       <recent name="E:\Zhangxin\github\TestProtobufLua\Assets\ab\files" />
       <recent name="E:\Zhangxin\github\TestProtobufLua\Assets\ab\lua\testProtobuf" />
       <recent name="E:\Zhangxin\github\TestProtobufLua\Assets\LuaFramework\ToLua\Lua" />
-      <recent name="E:\Zhangxin\github\TestProtobufLua\Assets\LuaFramework\ToLua\Lua\protobuf" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\Zhangxin\github\TestProtobufLua\Assets\ab\lua\common" />
     </key>
   </component>
   <component name="WindowStateProjectService">
@@ -74,16 +74,16 @@
     </state>
     <state x="561" y="235" width="540" height="524" key="StructurePopup/1680.0.1680.1010/0.0.1680.1010@0.0.1680.1010" timestamp="1604046584916" />
     <state x="2241" y="235" width="540" height="524" key="StructurePopup/1680.0.1680.1010/0.0.1680.1010@1680.0.1680.1010" timestamp="1606440846274" />
-    <state x="882" y="138" width="784" height="724" key="find.popup" timestamp="1607590938079">
-      <screen x="0" y="0" width="1680" height="1010" />
+    <state x="1937" y="163" width="1188" height="847" key="find.popup" timestamp="1608271964594">
+      <screen x="1680" y="0" width="1680" height="1010" />
     </state>
     <state x="882" y="138" width="784" height="724" key="find.popup/1680.0.1680.1010/0.0.1680.1010@0.0.1680.1010" timestamp="1607590938079" />
-    <state x="265" y="144" width="1188" height="847" key="find.popup/1680.0.1680.1010/0.0.1680.1010@1680.0.1680.1010" timestamp="1607074317113" />
-    <state x="496" y="147" width="672" height="676" key="search.everywhere.popup" timestamp="1607590746362">
-      <screen x="0" y="0" width="1680" height="1010" />
+    <state x="1937" y="163" width="1188" height="847" key="find.popup/1680.0.1680.1010/0.0.1680.1010@1680.0.1680.1010" timestamp="1608271964594" />
+    <state x="2176" y="147" width="672" height="676" key="search.everywhere.popup" timestamp="1608271918731">
+      <screen x="1680" y="0" width="1680" height="1010" />
     </state>
     <state x="496" y="147" width="672" height="676" key="search.everywhere.popup/1680.0.1680.1010/0.0.1680.1010@0.0.1680.1010" timestamp="1607590746362" />
-    <state x="2176" y="147" width="672" height="676" key="search.everywhere.popup/1680.0.1680.1010/0.0.1680.1010@1680.0.1680.1010" timestamp="1607334886596" />
+    <state x="2176" y="147" width="672" height="676" key="search.everywhere.popup/1680.0.1680.1010/0.0.1680.1010@1680.0.1680.1010" timestamp="1608271918731" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

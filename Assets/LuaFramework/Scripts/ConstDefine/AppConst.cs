@@ -8,14 +8,30 @@ namespace LuaFramework {
 		/// <summary>
 		/// 调试模式-用于内部测试
 		/// </summary>
-		public const bool DebugMode = true;
+		public static bool DebugMode {
+			get {
+#if UNITY_EDITOR
+				return false;
+#else
+				return true;
+#endif
+			}
+		}
 		/// <summary>
 		/// 更新模式-默认关闭 
 		/// 如果开启更新模式，前提必须启动框架自带服务器端。
 		/// 否则就需要自己将StreamingAssets里面的所有内容
 		/// 复制到自己的Webserver上面，并修改下面的WebUrl。
 		/// </summary>
-		public const bool UpdateMode = true;
+		public static bool UpdateMode {
+			get {
+#if UNITY_EDITOR
+				return false;
+#else
+				return true;
+#endif
+			}
+		}
 		public const int TimerInterval = 1;
 		/// <summary>
 		/// 游戏帧频

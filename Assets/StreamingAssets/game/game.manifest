@@ -1,0 +1,39 @@
+ManifestFileVersion: 0
+CRC: 252176853
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: lua/common.unity3d
+      Dependencies: {}
+    Info_1:
+      Name: lua/logic.unity3d
+      Dependencies: {}
+    Info_2:
+      Name: lua/main.unity3d
+      Dependencies: {}
+    Info_3:
+      Name: lua/testpbc.unity3d
+      Dependencies: {}
+    Info_4:
+      Name: lua/testprotobuf.unity3d
+      Dependencies: {}
+    Info_5:
+      Name: lua/tolua.unity3d
+      Dependencies: {}
+    Info_6:
+      Name: res/img_prompt.unity3d
+      Dependencies: {}
+    Info_7:
+      Name: res/img_shared.unity3d
+      Dependencies: {}
+    Info_8:
+      Name: res/prefab_game.unity3d
+      Dependencies:
+        Dependency_0: res/img_prompt.unity3d
+    Info_9:
+      Name: res/prefab_hall.unity3d
+      Dependencies:
+        Dependency_0: res/img_shared.unity3d
+    Info_10:
+      Name: res/prefab_login.unity3d
+      Dependencies: {}

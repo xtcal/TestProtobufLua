@@ -99,6 +99,13 @@ namespace LuaFramework {
 		/// 载入素材
 		/// </summary>
 		void LoadAsset<T> (string abName, string[] assetNames, Action<UObject[]> action = null, LuaFunction func = null) where T : UObject {
+			if (abName != "game" && m_AssetBundleManifest == null) {
+				ResManager.Initialize ("game", delegate () {
+					LoadAsset<T> (abName, assetNames, action, func);
+				});
+				return;
+			}
+
 			abName = GetRealAssetPath (abName);
 
 			LoadAssetRequest request = new LoadAssetRequest ();

@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 2341139105
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: e71069784421fb79a075f52404233780
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/lua2txt/common/option.lua.bytes
+- Assets/lua2txt/common/tools.lua.bytes
+- Assets/lua2txt/common/TimeTick.lua.bytes
+- Assets/lua2txt/common/UiClickHelper.lua.bytes
+- Assets/lua2txt/common/ObjPoolManager.lua.bytes
+- Assets/lua2txt/common/Network.lua.bytes
+Dependencies: []
